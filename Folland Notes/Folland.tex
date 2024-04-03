@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\bignorm}{\Big | \Big |}
+\newcommand{\exr}{[-\infty, \infty]}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+    
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+    
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+    
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Folland Notes} \hfill \today
+\\ \\
+\section{Normed spaces}
+Let $K$ denote either $\R$ or $\C$ and let $\X$ a vector space over $K$. A \textbf{subspace} of $\X$ is a vector a subspace. For $x \in X$, we denote $Kx$, the one-dimensional subspace spanned by $x$.
+\begin{definition}{(Seminorm and Norm)}
+    A \textbf{seminorm} on $\X$ is a function $||\cdot||_\X : \X \rightarrow [0,\infty)$ given by $x \mapsto ||x||_\X$ that satisfies the following two properties:
+    \begin{enumerate}
+        \item $\forall x,y \in \X, ||x + y||_\X \leq ||x||_\X + ||y||_\X \: \textbf{(Triangle inequality)}$
+        \item $\forall x \in \X, \forall \lambda \in K, ||\lambda x||_\X = |\lambda|||x||_\X \: \textbf{(Absolute homogeneity)}$
+    \end{enumerate}
+    If a seminorm also satisfies the property the following property:
+    $$||x||_\X \: \text{iff} \: x = 0 \: \textbf{(Positive definiteness)}$$
+    Then we say it is \textbf{norm}.
+\end{definition}
+
+A vector space with a norm is called a \textbf{normed space}; on a normed space, the following definition:
+$$d(x,y) = ||x - y||_\X$$
+defines a metric; which furthermore induces a topology on $\X$, the "\textbf{norm topology}". 
+
+\begin{definition}
+    Two norms $||\cdot||_1$ and $||\cdot||_2$ are said to be equivalent if $\exists C_1, C_2 > 0$ such that:
+    $$C_1||x||_1 \leq ||x||_2 \leq C_2||x||_1$$
+\end{definition}
+
+A normed space which is complete with regard to the norm metric is called a \textbf{Banach space}. 
+
+\begin{example}{(Completion with respect to the norm metric)}
+    Every normed space can be embedded in a Banach space as a dense subspace; the prototypical example being $\Q$ in $\R$. 
+\end{example}
+
+\begin{definition}{(Convergent vs. absolutely convergent)}
+    If $\{x_n\}$ is a sequence in $X$, we say $\sum_{n = 1}^{\infty} x_n$ \textbf{converges} to $x$ if $\underset{N \rightarrow \infty}{\lim} \sum_{n = 1}^N x_n = x$, it is \textbf{absolutely convergent} if $\sum_{n = 1}^\infty ||x_n||_\X < \infty$. 
+\end{definition}
+
+\begin{theorem}{(Completeness characterization)}
+    A normed space $\X$ is complete if and only if every absolutely convergent series in $\X$ converges in $\X$. 
+    \begin{proof}
+        $\Rightarrow$
+        \\ \\
+        If $\X$ is complete and $\sum_{n = 1}^\infty ||x_n|| < \infty$, let $S_n = \sum_{n = 1}^N x_n$. Take $N, k \in \mathbb{N}$, and consider the following:
+        \begin{equation}
+            \begin{aligned}
+                ||S_N - S_{N + k}||_\X = ||S_{N + k} - S_N|| \\
+                = \bignorm \sum_{n = 1}^{N + k} x_n - \sum_{n = 1}^{N} x_n \bignorm_\X = \bignorm \sum_{n = N}^{N + k} x_n \bignorm_\X \\
+                \leq \sum_{n = N}^{N + k} ||x_n||_\X \leq \sum_{n = N}^\infty 
+            \end{aligned}
+        \end{equation}
+        But by Cauchy's criteria for series convergence, the "tail" of series, i.e. the last term in the given equation, goes to $0$ as $N \rightarrow \infty$. It follows the sequence is Cauchy, and thus as $\X$ is complete it converges to some $x$. 
+        \\ \\
+        $\Leftarrow$
+        \\ \\ 
+        Conversely, suppose that every absolutely convergent series converges and that $\{x_n\}$ is a Cauchy sequence. \\ \\
+        We choose $n_1 < n_2 < ...$ such that:
+        $$||x_n - x_m||_\X < 2^{-j}, \forall m, n \geq n_j$$
+        With this, define $y_1 = x_{n_1} \text{ and } y_j = x_{n_j} - x_{n_{j - 1}}$. Then we note that $\sum_{j = 1}^k = x_{n_k}$ and $\sum_{j = 1}^\infty ||y||_{\X} \leq ||y_1||_{\X} + \sum_{j = 1}^{\infty} 2^{-j} = ||y_1||_{\X} + 1 < \infty$. \\ \\
+        So $\underset{k \rightarrow \infty}{\lim}x_{n_k} = \sum_{j = 1}^{\infty} y_j$ exists, so $x_n$ is Cauchy and has a convergent subsequence, so $x_n$ converges to some $x \in \X$. 
+    \end{proof}
+\end{theorem}
+If $\X$ and $\Y$ are normed vector spaces $\X \times \Y$ becomes a normed space equipped with the product norm $||(x,y)||_{\X \times \Y} = \max\{||x||_{X}, ||y||_{Y}\}$. 
+\\ \\
+A linear map $T : \X \rightarrow \Y$ between two normed space is called \textbf{bounded} if:
+$$\exists C > 0 \text{ s.t. }, ||T(x)||_{Y} \leq C||x||_X, \forall x \in \X$$
+\begin{theorem}{(Continuity characterization)}
+    If $\X$ and $\Y$ are normed spaces and $T : X \rightarrow Y$ is a linear map, then the following statements are equivalent:
+    \begin{enumerate}
+        \item $T$ is continuous.
+        \item $T$ is continuous at $0$.
+        \item $T$ is bounded. 
+    \end{enumerate}
+    \begin{proof}
+        We see $(1)$ has $(2)$ automatically, so we assume $T$ is continuous at $0 \in \X$ and work to show it is bounded. For this, note by definition of continuity that we have for some $\delta > 0$ that $||x||_{\X} \leq \delta \rightarrow ||T(x)||_{\Y} \leq 1$. It follows:
+        $$||T(x)||_Y = \bignorm \frac{||x||_{\X}}{\delta}T \Big ( \frac{\delta x}{||x||_{\X}} \Big )\bignorm \leq \frac{||x||_{\X}}{\delta}$$
+        So $C = \frac{1}{\delta}$ bounds $T$. \\ \\
+        Finally, if $||T(x)||_{Y} \leq C||x||_{\X}$, i.e. bounded, then $\forall x \in \X$ we have taking $||x - y||_{X} < \frac{\epsilon}{C}$:
+        $$||T(x) - T(y)||_{\Y} = ||T(x-y)||_{\Y} \leq C||x-y||_{X} < C\frac{\epsilon}{C} = C$$
+        So all statements are equivalent. One notes this also has continuous $\Leftrightarrow$ uniformly continuous.
+    \end{proof}
+\end{theorem}
+If $\X$ and $\Y$ are normed vector spaces, we denote the space of all bounded linear maps from $\X$ to $\Y$ by $L(\X, \Y)$. This trivially forms a vector space, which becomes a normed space under the following definition:
+$$||T||_{L(\X, \Y)} = \sup\{||T(x)||_Y : ||x||_{X} = 1\} = \sup\Big \{ \frac{||T(x)||_Y}{||x||_X} : x \neq 0 \Big \}$$
+We quickly verify the two given definitions are equivalent:
+\begin{proof}
+    Let $A = \{||T(x)||_Y : ||x||_{X} = 1\}$ and $B = \Big \{ \frac{||T(x)||_Y}{||x||_X} : x \neq 0 \Big \}$. Let $a \in A$, i.e. for some $x \in \X$, $a = ||T(x)||_{\Y}$ where $||x||_{\X} = 1$. \\ \\
+    By positive definiteness, we know $x \neq 0$, so $a = \frac{||T(x)||_{\Y}}{||x||_{\X}}$ for $x \neq 0$, for $a = b \in B$. And thus $\forall a \in A, a \leq \sup B$, so $\sup A \leq \sup B$. 
+    \\ \\ For the other directions, consider then $b \in B$, i.e. $b = \frac{||T(x)||_{\mathcal{Y}}}{||x||_{\mathcal{X}}}$ for $x \neq 0$. In this case, $\frac{x}{||x||}$ exists, and its norm is just $1$. But then:
+    $$b = \frac{||T(x)||_{\mathcal{Y}}}{||x||_{\mathcal{X}}} = \bignorm T(\frac{x}{||x||_{\X}}) \bignorm_{\Y} \in A$$
+    And the same argument yields then that $\sup A = \sup B$. 
+\end{proof}
+
+\begin{theorem}
+    If $\Y$ is complete, so is $L(\X, \Y)$.
+    \begin{proof}
+        Let $\{T_n\}$ be a Cauchy sequence in $L(\X, \Y)$. If $x \in \X$, then $\{T_n(x)\}$ is Cauchy in $Y$ as we have the following lemma:
+        \begin{lemma}{(Operator norm)}
+            Note that $||T(x)||_{\Y} \leq ||T||_{L(\X, \Y)}||x||_{X}$. In particular this is trivially shown for $x = 0$, and for $x \neq 0$ this is equivalent to:
+            $$\frac{||T(x)||_{\Y}}{||x||_{\X}} \leq ||T||_{L(\X, \Y)}$$
+            But this follows from definition.
+        \end{lemma}
+        So $||T_n(x) - T_m(x)||_{\Y} = ||(T_n - T_m)(x)||_{\Y} \leq ||T_n - T_m||_{L(\X, \Y)}||x||_{\mathcal{X}}$. So $\{T_n\}$ has $\{T_n(x)\}$ Cauchy in $Y$ for every $x \in \X$, so as $\Y$ is complete each sequence $\{T_n(x)\}$ converges in $\Y$. \\ \\
+        So we define $T(x) = \underset{n \rightarrow \infty}{\lim} T_n(x)$. This is clearly linear via the linearity of the limit, and we can show $\underset{n \rightarrow \infty}{\lim} ||T_n - T||_{L(\X, \Y)}$ by considering the set of $||(T_n - T)(x)||_{Y}$ for $||x||_{\X} = 1$. First though, we prove a lemma:
+        \begin{lemma}{(Operator norm is actually a max)}
+            Let $T : X \rightarrow Y$ be a bounded linear operator. Then the function defined by $||T(x)||_{\Y}$ is continuous on $X$. 
+            \begin{proof}
+                For this, just note that we have the following:
+                \begin{equation}
+                    \begin{aligned}
+                    |||T(x)||_{\Y} - ||T(y)||_{\Y}| \leq ||T(x) - T(y)||_{\Y} \\
+                    = ||T(x-y)||_{\Y} \leq C||x-y||_{X}
+                    \end{aligned}
+                \end{equation}
+                And so it is continuous.
+            \end{proof}
+            It follows then that the restriction of this function to the unit circle in $\X$ is continuous, and so the supremum in the operator norm definition is actually a max by the extreme value theorem, i.e. $||T||_{L(\X, \Y)} = ||T(x)||_{\Y}$ for some $x \in X$ with $||x||_{\X} = 1$. \\ \\
+        \end{lemma}
+        We return then to looking at $\underset{n \rightarrow \infty}{\lim} ||T_n - T||_{L(\X, \Y)}$. Under our lemma, this reduces to $\underset{n \rightarrow \infty}{\lim} \max\{||T_n(x) - T(x)||_{Y} : ||x||_{\X} = 1||\}$. 
+        \textbf{This is an incomplete proof, see https://math.stackexchange.com/questions/2241816/if-y-is-complete-then-bx-y-is-complete}.
+    \end{proof}
+\end{theorem}
+\section{Linear functionals}
+Let $\X$ be a vector space over $K$, where $K = \R or \C$. A linear map from $\X$ to $K$ is called a linear functional on $\X$. If $\X$ is a normed space, the space $L(\X, K)$ of bounded linear functionals on $\X$ is called the $\textbf{dual space}$ of $\X$ and is denoted by $\X^*$. According to the previous theorem, $\X^*$ is a Banach space with the operator norm. 
+\\ \\
+Note also if $\X$ a vector space over $\C$, it also is over $\R$. We can construct a relationship between complex and real functionals in this way then. 
+\begin{theorem}
+    Let $\X$ be a vector space over $\C$. If $f$ is a complex linear functional and $u = \text{Re}f$, then $u$ is a real linear functional, and $f(x) = u(x) - iu(ix)$ for all $x \in X$. Conversely, if $u$ is a real linear functional and $f$ is defined by $f(x) = u(x) - iu(ix)$, then $f$ is complex linear. In this case, if $\X$ is normed, we have $||u|| = ||f||$. 
+    \begin{proof}
+        I will prove this later, I'm tired.
+    \end{proof}
+\end{theorem}
+
+\begin{definition}{(Minkowski functional)}
+    If $\X$ is a real vector space, a \textbf{Minkowski functional} on $\X$ is a map $p : \X \rightarrow \R$ such that $p(x + y) \leq p(x) + p(y)$ and $p(\lambda x) = \lambda p(x)$ for all $x, y \in \X$ and $\lambda > 0$. 
+\end{definition}
+
+
+
+
+\end{document}

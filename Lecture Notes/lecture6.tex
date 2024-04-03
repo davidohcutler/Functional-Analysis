@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\bignorm}{\Big | \Big |}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+        
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Lecture 6} \hfill \today
+
+\begin{example}
+    If $X, Y$ are normed spaces, the $L(X,Y)$ is a normed space. If $Y$ is complete, then $L(X,Y)$ is complete. If $X$ is a normed space, then the normed space $X^* = L(X, F)$ is the dual of $X$:
+    $$X* = \{L : X \rightarrow F : L \text{ is continuous and linear}\}$$
+\end{example}
+
+\begin{example}
+    Let $X, Y, Z$ be normed spaces. Furthermore, take $T \in L(X,Y), S \in L(Y,Z)$. We have then $S \circ T \in L(X,Z)$. It is easy to to check linearity, and boundedness follows from the submultiplicative property of the operator norm, in particular we have:
+    \begin{equation}
+        \begin{aligned}
+        \underset{||x||_X = 1}{\sup} ||S \circ T(x)||_Z = \underset{||x||_X = 1}{\sup} ||S(T(x))||_Z \leq \underset{||x||_X = 1}{\sup} ||S||_{L(Y,Z)}||Tx||_Y = ||S||_{L(Y,Z)}\underset{||x||_X = 1}{\sup} ||Tx||_Y \\
+        \leq ||S||_{L(Y,Z)} ||T||_{L(X,Y)} \underset{||x||_X = 1}{\sup} ||x||_X = ||S||_{L(Y,Z)} ||T||_{L(X,Y)} 
+        \end{aligned}
+    \end{equation}
+    Thus in general we have something like:
+    $$||S \circ T||_{L(X,Z)} \leq ||T||_{L(X,Y)} ||S||_{L(Y,Z)}$$
+    Under this, we note that the bounded linear operators on a normed space form a normed algebra. 
+\end{example}
+    We get some additional definitions/facts on $T \in L(X,Y)$:
+    \begin{enumerate}[label=(\alph*)]
+        \item $T$ is injective if $\text{ker}(T) = \{x \in X, Tx = 0\} = \{0\}$. \\
+        \item $T$ is surjective if $\text{range}(T) \{Tx, x \in X\} = Y$.
+        \item $T$ is an isomorphism of normed spaces if $T$ is bijective.
+        \item $T$ is isometric if $||Tx||_Y = ||x||_X, \forall x \in X$. 
+    \end{enumerate}
+\begin{theorem}{(Riesz Representation Theorem for Hilbert Space)}
+    Let $H$ be a Hilbert space. Any bounded linear functional $T$ on $H$ has the form $Tx = \langle x, z \rangle$ for a unique $z \in H$. and $||T|| = ||z||$. 
+\end{theorem}
+
+\end{document}

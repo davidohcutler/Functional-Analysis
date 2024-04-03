@@ -1,0 +1,152 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\bignorm}{\Big | \Big |}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+        
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Lecture 1} \hfill \today
+
+\begin{definition}{(Semi-Norm and Norm)}
+    Let $X$ be a vector space. Then if the mapping $||\cdot||_{X} : X \rightarrow [0,\infty)$ given by $x \rightarrow ||x||$ has:
+        \begin{enumerate}
+            \item $\forall x, y \in X, ||x + y|| \leq ||x|| + ||y||$ \textbf{(Triangle Inequality)}
+            \item $\forall \lambda \in K, \forall x \in X, ||\lambda x|| = |\lambda|||x||$ \textbf{(Absolute Homogeneity)}
+            \item $||0|| = 0 \text{ and if } ||x|| =0 \rightarrow x = 0$ \textbf{(Positive Definiteness)}
+        \end{enumerate}
+    It is called a \textbf{norm} on $X$. Fulfilling just the first two yields a \textbf{semi-norm}.
+\end{definition}
+
+\begin{definition}{(Normed Vector Space)}
+    A \textbf{normed vector space} is a vector space $X$ on a field $K$ equipped with a norm.
+\end{definition}
+
+\begin{definition}{(Metric Norm)}
+    If $(X, ||\cdot||)$ is a normed space, then $d(x,y) = ||x - y||$ defines a distance (or metric) on $X$ called the \textbf{norm metric}.
+\end{definition}
+
+\begin{definition}{(Completeness in Norm Metric)}
+    A normed space is a said to be \textbf{complete} with respect to the norm metric if every Cauchy sequence in $X$ converges in $X$. 
+\end{definition}
+
+\begin{definition}{(Banach Space)}
+    A normed vector space which is complete is the norm metric is a \textbf{Banach space}.
+\end{definition}
+
+\begin{theorem}{(Norm Equivalence on Finite-Dimensional Normed Vector Spaces)}
+    If $V$ is a finite-dimensional vector space, then all norms on $V$ are \textbf{equivalent}. That is, in $||\cdot||_1 \text{ and } ||\cdot||_2$ are any 2 norms on $V$, $$\exists c_1, c_2 > 0 \text{ such that } c_1||x||_1 \leq ||x||_2 \leq c_2||x||_1, \forall x \in V$$ 
+\end{theorem}
+
+\begin{definition}{(Equivalent Norms)}
+    If $X$ is a vector space, we say two norms $||\cdot||_1$ and $||\cdot||_2$ are \textbf{equivalent} if there are $$c_1, c_2 > 0 \text{ such that } \forall x \in X, c_1||x||_1 \leq ||x||_2 \leq c_2||x||_1$$
+\end{definition}
+
+\begin{definition}{(Linear Mapping and Its Boundedness)}
+    Let $X, Y$ be two vector spaces. A map $T : X \rightarrow Y$ is \textbf{linear} if:
+    \begin{equation}
+    \begin{aligned}
+        \forall x_1, x_2 \in X, T(x_1 + x_2) = T(x_1) + T(x_2) \\ 
+        \forall \lambda \in K, \forall x \in X, T(\lambda x) = \lambda T(x)
+    \end{aligned}
+    \end{equation}
+    If $X$ and $Y$ are normed spaces then the linear map $T : X \rightarrow Y$ is said to be \textbf{bounded} if: $$\exists c > 0 \text{ such that } ||T(x)||_Y \leq c||x||_X, \forall x \in X$$
+\end{definition}
+
+\begin{theorem}{(Continuity Conditions on Normed Spaces)}
+    Let $T : X \rightarrow Y$ be a linear map between two normed spaces. Then the following statements are equivalent:
+        \begin{enumerate}[label=(\alph*)]
+            \item $T$ is continuous on $X$
+            \item $T$ is continuous at $0$
+            \item $T$ is bounded
+        \end{enumerate}
+        \begin{proof}
+            Remark $(a) \rightarrow (b)$ is trivial, so we proceed with $(b) \rightarrow (c)$. Let $\epsilon > 0$ then. Using continuity at $0$, we know that $\exists \delta > 0$ such that $||x|| < \delta$ has $||T(x)|| < \epsilon$. Consider some $x \in V$ then, rewriting yields the following:
+            \begin{equation}
+                \begin{aligned}
+                    ||T(x)|| = \bignorm T \Big ( \frac{\delta x}{2||x||} \cdot \frac{2||x||}{\delta} \Big ) \bignorm = \frac{2||x||}{\delta} \bignorm T\Big (\frac{\delta x}{2||x||} \Big) \bignorm
+                \end{aligned}
+            \end{equation}
+            Note then that $\bignorm T(\frac{\delta x}{2||x||}) \bignorm < \epsilon$ as $\bignorm \frac{\delta x}{2||x||} \bignorm = \frac{\delta}{2} \bignorm \frac{x}{||x||} \bignorm = \frac{\delta}{2}$. Thus:
+            \begin{equation}
+                \frac{2||x||}{\delta} \bignorm T\Big (\frac{\delta x}{2||x||} \Big) \bignorm < \frac{2||x||}{\delta}\epsilon 
+            \end{equation}
+            Taking $c = \frac{2||x||}{\delta}$ thus suffices. For $(c) \rightarrow (a)$, we assume boundedness and take $c$ in the definition. Consider $x_n \rightarrow x_0 \in X$ then and take $c$ in the definition of boundedness, we want to show that: $$\underset{n \rightarrow \infty}{\lim} ||T(x_n) - T(x_0)|| = 0$$
+            For this sake, note we have the following:
+            $$ ||T(x_n) - T(x_0)|| = ||T(x_n - x_0)|| \leq c||x_n - x_0||$$
+            But $x_n \rightarrow x_0$, so the latter quantity gets small. Applying the squeeze theorem thus has the desired result, and so all given conditions are equivalent.
+        \end{proof}
+\end{theorem}
+
+\begin{theorem}{(Completeness Characterization)}
+    Let $(X, ||\cdot||_X)$ be a normed space. \\ \\
+    $X$ is complete if and only if every absolutely convergent series in $X$ converges in $X$, i.e. if $\{x_n\}_{n = 1}^\infty$ is a sequence then:
+    \begin{equation}
+        \sum_{n = 1}^\infty ||x_n||_X < \infty \longrightarrow \sum_{n = 1}^\infty x_n \text{ converges in } X
+    \end{equation}
+    Note here that $\sum_{n = 1}^\infty$ converges in $X$ means for $S_k = \sum_{n = 1}^k x_n$, we have $\underset{k \rightarrow \infty}{\lim} S_k = x \in X$. 
+
+\begin{proof}
+    We start with the forward implication, assuming $X$ is complete. Let $\{x_k\}_{k = 1}^\infty$ such that $\sum_{k = 1}^\infty ||x_n||_X < \infty$. Let $\epsilon > 0$, then using Cauchy's criteria for series convergence, we have some $N \in \mathbb{N}$ such that:
+    $$\sum_{k = N}^\infty ||x_k||_X < \epsilon$$
+    Define $S_n$ by $S_n = \sum_{k = 1}^n x_n$. Consider $n, m \geq N$ with $n \geq m$ without loss of generality. Then we have the following:
+    \begin{equation}
+        \begin{aligned}
+        ||S_n - S_m||_X = \bignorm \sum_{k = 1}^n x_n - \sum_{k = 1}^m x_n \bignorm_X \\
+        = \bignorm \sum_{k = m}^n x_n \bignorm_X \leq \sum_{k = m} ||x_n||_X \leq \sum_{k = N}^\infty ||x_n||_X < \epsilon
+        \end{aligned}
+    \end{equation}
+    Thus the sequence of partial sums is Cauchy, and so as $X$ is complete it is convergent. This is of course precisely that $\sum_{n = 1}^\infty x_n$ is convergent though, so this implication is finished. \\ \\
+    For the reverse implication, let $\{x_n\}_{n = 1}^\infty$ be a Cauchy sequence in $X$. We want to show it converges. Using the definition of a Cauchy sequence, we generate some $n_j$s in the following fashion:
+    \begin{equation}
+        \begin{aligned}
+            \exists n_1 < n_2 < ... \\
+            ||x_n - x_m||_X < 2^{-j}, \forall n,m \geq n_j
+        \end{aligned}
+    \end{equation}
+    Define a new sequence $\{y_j\}_{j = 1}^\infty$ by taking $y_1 = x_{n_1}, y_j = \sum_{k = 1}^j x_{n_k} - x_{n_{k -1}}$. Observe then the following:
+    \begin{equation}
+        \sum_{j = 1}^\infty ||y_1||_X + \sum_{j = 2}^\infty ||x_{n_k} - x_{n_{k-1}}||_X < ||y_1||_X + \sum_{j = 1}^\infty 2^{-j} = ||y_1||_X + 1 < \infty
+    \end{equation}
+    Thus, as we are operating under the assumption that all absolutely convergent series converge, $\sum_{j = 1}^\infty y_j$ converges in $X$, but this just means $\underset{j \rightarrow \infty}{\lim} x_{n_j}$ converges. So $x_n$ is a Cauchy sequence with a convergent subsequence, and thus it is convergent.
+\end{proof}
+\end{theorem}
+\begin{definition}{(Space of Linear Bounded Operators)}
+    Let $X, Y$ be normed spaces. We define:
+    \begin{equation}
+        L(X,Y) = \{T : X \rightarrow Y : T \text{ is linear and bounded}\}
+    \end{equation}
+\end{definition}
+\begin{definition}{(Operator Norm)}
+    If $T \in L(X,Y)$, then we define:
+    \begin{equation}
+        \begin{aligned}
+            ||T||_{L(X,Y)} = \sup \{||T(x)||_Y, ||x||_X = 1\} \\ 
+            = \sup \Big \{ \frac{||T(x)||_Y}{||x||_X}, x \in X, x \neq 0 \Big \} \\
+            = \inf \{ c > 0 : ||T(x)||_Y \leq c||x||_X,  \forall x \in X \}
+        \end{aligned}
+    \end{equation}
+\end{definition}
+
+\end{document}

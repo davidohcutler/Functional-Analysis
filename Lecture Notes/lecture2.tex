@@ -1,0 +1,165 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\bignorm}{\Big | \Big |}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+        
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Lecture 2} \hfill \today
+
+\begin{definition}{(Banach Space)}
+    Recall: $X$ is a \textbf{Banach space} if $X$ is a linear normed space which is complete with respect to the metric norm. 
+\end{definition}
+
+\begin{theorem}{(Completeness Characterization)}
+    Recall: A normed space is complete if and only if if every absolutely convergent series in $X$ converges in converges in $X$.
+\end{theorem}
+
+\begin{definition}{(Linearity and Boundedness)}
+    For $X, Y$ normed spaces, then $T : X \rightarrow Y$ is said to be \textbf{linear} if $\forall a, b \in \mathbb{C}, \forall f, g \in X$ we have:
+    $$T(af + bg) = aT(f) + bT(g)$$
+    Furthermore, $T$ is said to be \textbf{bounded} if there is $c > 0$ such that $\forall f \in X$:
+    $$||Tf||_Y \leq c||f||_X$$
+\end{definition}
+
+\begin{theorem}{(Continuity)}
+    $T : X \rightarrow Y$ between normed spaces is bounded iff $T$ is continuous at $0$ iff $T$ is continuous on $X$
+\end{theorem}
+
+\begin{definition}{(Norm of a Transformation)}
+    $L(X,Y)$ is the set of all bounded linear mappings from $X$ to $Y$. \\ \\
+    The function $T \in L(X,Y) \mapsto ||T|| = \sup\{||Tx||_Y, ||x|| = 1\}$ defines a norm on $L(X,Y)$ and:
+    $$||T|| = \sup \Big \{\frac{||Tx||_Y}{||x||_X}, x \neq 0\} = \inf\{c > 0 : ||Tx||_Y \leq c||x||_X\}$$ 
+\end{definition}
+
+\begin{theorem}{(Lp Spaces are Normed Spaces)}
+    \begin{proof}
+        Let $1 \leq p \leq \infty$. Recall $L^p(\R^d) = \{f : \R^d \rightarrow \mathbb{C}, f \: \text{Lebesgue measurable and } \int_{\R^d}|f|^p < \infty\}$. \\
+        $f \mapsto ||f||_p = \Big (\int_{\R^d} |f|^p \Big)^{\frac{1}{p}}$ is a norm on $L^p(\R^d)$. 
+        \begin{enumerate}
+            \item $f, g \in L^p \rightarrow f + g \in L^p$
+            \item $\forall c \in \mathbb{C}, f \in L^p \rightarrow cf \in L^p$
+        \end{enumerate}
+        For $(1)$, note using convexity:
+        $$|f + g|^p \leq (|f| + |g|)^p = 2^p \Big(\frac{|f|}{2} + \frac{|g|}{2} \Big)^p \leq 2^p \Big (\frac{|f|}{2} + \frac{|g|}{2} \Big)^p \leq 2^p \Big ( \frac{1}{2} |f|^p + \frac{1}{2}|g|^p \Big ) = 2^{p - 1}(|f|^p + |g|^p)$$
+        So we get:
+        $$\int_{\R^d} |f + g|^2 \leq 2^{p - 1}\Big (\int_{\R^d} |f|^p + \int_{\R^d} |g|^p \Big) < \infty$$
+        This proves (1.), where (2.) is trivial.
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}{(Minkowski's Inequality)}
+    For all $f, g \in L^p(\R^d)$, we have the following:
+    $$||f + g||_p \leq ||f||_p + ||g||_p$$
+\end{theorem}
+
+\begin{definition}{(Dual)}
+    For $p \in [1, \infty]$, the unique $p$ for which $\frac{1}{p} + \frac{1}{q}$ is called the \textbf{dual} of $p$.
+\end{definition}
+
+\begin{theorem}{(Hölder's Inequality)}
+    If $f \in L^p(\R^d)$, $g \in L^q(\R^d)$, then $fg \in L^1(\mathbb{R}^d)$ and $||fg||_1 \leq ||f||_p||g||_q$.
+\begin{proof}
+    I will prove this for $p,q \geq 1$, as these are generally the only cases considered in functional analysis. \\ \\
+    Consider first the special case $p = \infty, q = 1$ (or $q = \infty, p = 1$, which is symmetric). \\ \\
+    Then we have $|fg| \leq ||f||_\infty|g|$ almost everywhere, and so we get the desired result from monotonicity of the integral. \\ \\
+    Consider the general case $p, q > 1$ then. We normalize $f$ and $g$ by $||f||_p$ and $||g||_q$ respectively, so we get:
+    $$||f||_p = ||g||_q = 1$$
+    Note here we are substituing $\frac{f}{||f||_p}$ for $f$ and $\frac{g}{||g||_q}$ for $g$. We then apply Young's inequality to get the following (this only holds for $p, q > 1$ with $\frac{1}{p} + \frac{1}{q} = 1$):
+    $$|fg| \leq \frac{|f|^p}{p} + \frac{|g|^q}{q}$$
+    Integrating both sides gets:
+    $$||fg||_1 \leq \frac{||f||_p^p}{p} + \frac{||g||_q^q}{q} = \frac{1}{p} + \frac{1}{q} = 1$$
+    So we get $||fg||_1 \leq 1$, where \textit{denormalizing} gets $||fg||_1 \leq ||f||_p||g||_q$. 
+\end{proof}
+\end{theorem}
+
+\begin{theorem}{(Lp Spaces are Complete)}
+    Consider some $L^p$ space for $p \geq 1$. Then $L^p(\R^d)$ is complete.
+    \begin{proof}
+        Let $\{f_n\}_{n = 1}^\infty$ in $L^p(\R^d)$ be Cauchy in the $L^p$ norm, specifically so that:
+        $$\forall \epsilon > 0, \exists N \in \N \text{ such that } \forall n, m, \geq N, ||f_n - f_{m}||_p < \epsilon$$
+        Let $\epsilon > 0$ and take $N$. Then by Chebyshev's inequality for $L^p$ spaces:
+        \begin{equation}
+            |\{|f_n - f_{m}| > \epsilon \}| \leq \frac{1}{\epsilon^p} ||f_n - f_{m}||_p^p
+        \end{equation}
+        Taking $N \rightarrow \infty$ makes the latter quality small, so we observe $\{f_n\}_{k = 1}^\infty$ is Cauchy in measure.  \\ \\
+        Recall convergence in measure is a "complete" characteristic, so we have $f_n \xrightarrow{m} f$ where $f$ is a measurable function, i.e. $f_n$ converges to some $f$ in measure. \\ \\
+        Moreover, this implies there exists a subsequence $\{f_{n_k}\}_{k = 1}^\infty$ such that $f_{n_k} \xrightarrow{\text{a.e}} f$. \\ \\
+        With this in mind, note for $j, j' \geq M$, we have:
+        $$||f_{n_j} - f_{n_{j'}}||_p < \epsilon$$
+        Fix $j \geq M$ then, and let $j' \rightarrow \infty$. Then we get the following using our earlier convergence of a subsequence and Fatou's lemma:
+        \begin{equation}
+            \begin{aligned}
+                \int_{\R^d} |f - f_{n_j}|^p = \int_{\R^d} \underset{j \rightarrow \infty}{\lim \inf} |f_{n_j} - f_{n_{j'}}|^p \\
+                \leq \underset{j \rightarrow \infty}{\lim \inf} \int_{\R^d} |f_{n_j} - f_{n_{j'}}| < \epsilon^p     
+            \end{aligned}
+        \end{equation}
+        Recall then that $\{f_n\}_{n = 1}^\infty$ is Cauchy in the $L^p$ norm. As it has a subsequence that converges in $L^p$, it follows it must converge to the same limit $f$. Thus we have completeness.
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}{(Closed Subspaces)}
+    \begin{enumerate}[label=(\alph*)]
+        \item A subspace $E$ of $X$ \textbf{closed} if and only if $E$ contains all of its limit points. 
+        \item If $E \subseteq X$ is a subspace, the set:
+        $$\overline{E} = E \cup \{\text{limit points of }E\}$$
+        is a closed subspace called the \textbf{closure} of $E$. \\ \\
+        Furthermore, $E$ is closed if and only if $E = \overline{E}$.
+        \item A subspace $E \subseteq X$ is \textbf{dense} if every point in $X$ is the limit of a sequence in $E$.
+        \item If $X$ is a Banach space and $E$ is a subspace of $X$ then $E$ is a Banach space if and only if $E$ is closed.
+    \end{enumerate}
+    \begin{proof}
+        No proof is given. Perhaps I will give one in the future! :)
+    \end{proof}
+\end{theorem}
+
+\begin{definition}{(Seperability)}
+    A normed space is \textbf{seperable} if a contains a countable dense subset.
+\end{definition}
+
+\begin{definition}{(Inner Product Space))}
+    A complex vector space is called an \textbf{inner product space} if there exists a mapping $\langle \cdot, \cdot \rangle : H \times H \rightarrow \mathbb{C}$ that satisfies the following properties:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\forall x, y, z \in H, \forall a, b \in \mathbb{C}$:
+        $$\langle ax + by, z \rangle = a\langle x, z \rangle + b\langle y, z \rangle \: \textbf{(Linearity in the First Argument)}$$
+        \item $\forall x, y \in H$:
+        $$\langle x, y \rangle = \overline{\langle x, y \rangle} \: \textbf{(Conjugate Symmetry)}$$
+        \item $\forall x \in H$, 
+        $$\langle x , x \rangle \geq 0 \text{ and } \langle x, x \rangle = 0 \text{ iff } x = 0 \: \textbf{(Positive Definiteness)}$$
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}{(Pre-Hilbert Space)}
+    If is $H$ a vector space and the candidate norm $||\cdot||_H : H \rightarrow [0,\infty)$ defined by $x \mapsto ||x||_H = \sqrt{\langle x, x \rangle}$ is a norm, then $H$ is a \textbf{pre-Hilbert space}.
+\end{definition}
+
+\begin{definition}{(Hilbert Space)}
+    If $H$ is a complete pre-Hilbert space, then it is called a \textbf{Hilbert space}. 
+\end{definition}
+
+
+
+
+\end{document}

@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\bignorm}{\Big | \Big |}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+        
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Lecture 2} \hfill \today
+
+\begin{theorem}{(Parallelogram Law)}
+    If $H$ is an inner product space, then for every $x, y \in H$:
+    \begin{equation}
+        ||x + y||^2 + ||x - y||^2 + 2(||x||^2 + ||y||^2)
+    \end{equation}
+\end{theorem}
+
+\begin{example}{(lp Norm)}
+    We define the $l_p$ norm for $\mathbb{C}^d$ for $\forall p \in (0, \infty)$ by the following convention:
+    \begin{equation}
+        ||x||_p = \Big ( \sum_{k = 1}^d |x_k|^p \Big )^{\frac{1}{p}}
+    \end{equation}
+    Interestingly, $p = 2$ uniquely generates the norm that satisifes the Parallelogram law. 
+\end{example}
+
+\begin{theorem}{(Unique Closest Point)}
+    Let $H$ be a Hilbert space and $M$ be a closed subspace of $H$. \\ \\
+    For every $x \in H$, there exists a unique $p \in M$ that is closest to $x$. That is that for some $p \in M$:
+    \begin{equation}
+        ||x - p|| = \inf \{||x - m|| , m \in M\} = \text{dist}(x, M)
+    \end{equation}
+    \begin{proof}
+        Let $d = \text{dist}(x, M)$. By the definition of the infinum, $\{y_n\}_{n = 1}^\infty \subseteq M$ such that $d = \underset{n \rightarrow \infty}{\lim} ||x - y_n||$. \\ \\
+        Take then $d^2 = \underset{n \rightarrow \infty}{\lim} ||x - y_n||^2$. Let $\epsilon > 0$. Using the definition of the limit, there $\exists N \in \mathbb{N}$ such that $\forall n \geq N$:
+        $$d^2 \leq ||x - y_n||^2 < d^2 + \epsilon$$
+        Take then $n, m \geq N$, this yields the following by applying the Parallelogram law:
+        \begin{equation}
+                ||(x - y_n) - (x - y_m)||^2 + ||(x - y_n) + (x + y_m)||^2 = 2(||x - y_n||^2 + ||x - y_m||^2)
+        \end{equation}
+        However, we also get the following by using homogeneity:
+        \begin{equation}
+            ||(x - y_n) - (x - y_m)||^2 + ||(x - y_n) + (x + y_m)||^2 = ||y_n - y_m||^2 + 4||x - \frac{(y_n + y_n)}{4}||^2
+        \end{equation}
+        Which gets us the following (as $\frac{(y_n + y_m)}{2} \in M$):
+        \begin{equation}
+            \begin{aligned}
+                4d^2 + ||y_n - y_m||^2 \leq 4d^2 + 4 \bignorm x - \frac{(y_n - y_m)}{2} \bignorm^2 \\
+                = 2(||x - y_n||^2 + ||x - y_m||^2) = 2||x - y_n||^2 + 2||x - y_m||^2 < 4d^2 + 4\epsilon 
+            \end{aligned}
+        \end{equation}
+        Which of course finally has:
+        \begin{equation}
+            ||y_n - y_m||^2 < \epsilon
+        \end{equation}
+        So $\{y_n\}_{n = 1}^\infty$ is Cauchy, and so it converges to some $y \in M$, where we get the final idea:
+        \begin{equation}
+            d = \underset{n \rightarrow \infty}{\lim} ||x - y_n|| = ||x - \underset{n \rightarrow \infty}{\lim} y_n || = ||x - y||
+        \end{equation}
+        Uniqueness is left as exercise to the reader.
+    \end{proof}
+\end{theorem}
+
+\end{document}

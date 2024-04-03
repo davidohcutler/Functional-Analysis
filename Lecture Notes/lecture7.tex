@@ -1,0 +1,79 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\bignorm}{\Big | \Big |}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+        
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Lecture 6} \hfill \today
+
+\begin{theorem}{(Riesz Representation Theorem for Hilbert Space)}
+    Let $H$ be a Hilbert space. Any bounded linear functional $T$ on $H$ has the form $Tx = \langle x, z \rangle$ for a unique $z \in H$. and $||T|| = \sup-{||x||_H = 1} |Tx| ||z||_H$. 
+    \begin{proof}
+        \begin{enumerate}
+            \item If $Tx = 0, \forall x \in H$, then $z = 0$.
+            \item $T \neq 0 \Leftrightarrow x_0 \in H : Tx_0 \neq 0 \Leftrightarrow \text{ker}T = \neq H$. \\ \\
+            But $\text{ker}(T)$ is a closed linear subspace of $H$, so we have $H = \text{ker}(T) \oplus \text{ker}(T)^\perp$. \\ \\
+            Thus we have that $x_0 = z_1 + z_0$ for $z_1 \in \text{ker}(T), z_0 \in \text{ker}(T)^\perp$. Let $x \in H$ and consider then the following for $v = T(z_0)x - T(x)z_0$:
+            \begin{equation}
+                Tv = T(z_0)T(x) - T(x)T(z_0) = 0
+            \end{equation}
+            Thus $v \in \text{ker}(T)$. Then as $z_0 \in \text{ker}(T)^\perp$, we get the following:
+            \begin{equation}
+                \begin{aligned}
+                    \langle v, z_0 \rangle = 0 \\
+                    \langle T(z_0)x - T(x)z_0, z_0 \rangle = 0 \\
+                    T(z_0)\langle x, z_0 \rangle - T(x)||z_0||^2 = 0 \\
+                    T(x) = \langle x , \frac{\overline{T(z_0)z_0}}{||z_0||^2} \rangle
+                \end{aligned}
+            \end{equation}
+            Thus we get the desired result with $z = \frac{\overline{T(z_0)z_0}}{||z_0||^2}$. To show uniqueness, we just say we have $z_1, z_2 \in H_2$ with the given properties. \\ \\
+            Then $T(x) = \langle x, z_1 \rangle - \langle x, z_2 \rangle$, which has $\langle x, z_1 - z_2 \rangle = 0, \forall x \in H$. Thus taking $x = z_1 - z_2$ has that $||z_1 - z_2||^2 = 0$.
+        \end{enumerate}
+    \end{proof}
+\end{theorem}
+
+Note then we get the following as a corollary:
+\begin{theorem}{Riesz Corollary}
+    Let $H$ be a Hilbert space. We consider a mapping $L: H \rightarrow H^*$ given by $z \mapsto L_z$, where $L_z(x) = \langle x, z \rangle$. \\ \\
+    Then $L$ is antilinear, and $L$ is an isomorphism.
+\end{theorem}
+
+\begin{theorem}
+    Let $1 \leq p \leq \infty$, and $q : \frac{1}{p} + \frac{1}{q} = 1$. Then for $\forall g \in L^q(E)$ for a measurable set $E$, then we have the following:
+    \begin{equation}
+        ||g||_{q} = \underset{||f||_p = 1}{\sup} \Big | \int_E f\overline{g} \Big |
+    \end{equation}
+    Also, if $1 \leq p < \infty$, then $(L^p)^* = L^q$ with the mapping given $\forall g \in L^q$ by $L_g : L^p \rightarrow \mathbb{C}$ with $f \mapsto \int f \overline{g}$. 
+    \begin{proof}
+        Consider the case $1 < p < \infty$. By Holder's inequality, $\forall g \in L^q$ with
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}
+    Let $X$ be a linear space and $M$ be a subspace of $X$. Let $\rho$ be a seminorm on $X$ and $\lambda: M \rightarrow F$ be a linear functional on $M$ such that $|\lambda(x)| \leq \rho(x), \forall x \in M$. Then there exists a linear functional $\Lambda$ on $X$ such that $\Lambda \vert_M = \lambda$ and $|\Lambda(x)| \leq \rho(x), \forall x \in X$. 
+\end{theorem}
+
+\end{document}

@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\bignorm}{\Big | \Big |}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+        
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Lecture Notes} \hfill \today
+
+\begin{theorem}{(Hahn-Banach)}
+    Let $X$ be a linear space, $\rho$ a seminorm on $X$, and $M$ be a subspace of $X$. If $\lambda : M \rightarrow F$ is a linear functional such that $$|\lambda(x)| \leq \rho(x), \; \forall x \in M$$
+    , then there exists a linear functional $\Lambda X \rightarrow F$ such that $\Lambda \vert_M = \lambda$ and:
+    $$|\Lambda(x)| \leq \rho(x), \; \forall x \in X$$
+\end{theorem}
+
+\begin{theorem}{(Hahn-Banach Corollary 1)}
+    Let $X$ be a normed linear space and $M \subseteq X$ be a subspace. If $\lambda \in M^\star$, then $\exists \Lambda \in X^\star$ such that:
+    $$\Lambda \vert_M = \lambda \text{ and } ||\Lambda||_{X^\star} = ||\lambda||_{M^\star}$$
+\end{theorem}
+
+\begin{theorem}{(Hahn-Banach Corollary 2)}
+    Let $X$ be a Banach space. Then for every $x \in X$, $||x||_X = \underset{\substack{f \in X^\star, }{||f||_{X^\star}} = 1}{\sup} |f(x)| = \alpha$.
+    \begin{proof}
+        Fix $x \in X$, $\forall f \in X^s\\star$
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}{(Banach-Steinhaus)}
+    Let $X$ and $Y$ be Banach spaces, if $\{A_n\} \subseteq B(X,Y)$ and $Ax = \underset{n \rightarrow \infty}{\lim} A_n x$ exists for all $x \in X$, then $A \in B(X,Y)$ and $||A|| \leq \underset{n}{\sup} ||A_n||$. 
+\end{theorem}
+
+\begin{theorem}{(The Open Mapping Theorem)}
+    \begin{definition}{(Open Mapping)}
+        Let $X, Y$ be normed spaces. A mapping $T : X \rightarrow Y$ if for $T(U)$ is open in $Y$ (under the norm topology), whenver $U$ is open in $X$.
+    \end{definition}
+    \;
+    \\ 
+    Let $X$ and $Y$ be Banach spaces, and $A : X \rightarrow Y$ a bounded, linear surjection. Then $A$ is an open mapping.
+    \begin{proof}
+        Remark $X = \bigcup_{n = 1}^\infty B_n(0)$. Moreover, $Y = AX = \bigcup_{n = 1}^\infty A(B_n(0)) \subseteq \bigcup_{n = 1}^\infty \overline{A(B_n(0))} \subseteq Y$. \\ \\
+        Thus $Y = \bigcup_{n = 1}^\infty A(B_n(0))$. By Baire Category theorem, $\exists n_0$ such that $\overline{A(B_{n_0}(0))}$ contains an open ball.
+    \end{proof}
+\end{theorem}
+
+
+\end{document}

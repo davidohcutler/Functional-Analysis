@@ -1,0 +1,385 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,enumitem,bbm,xparse}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rd}{\mathbb{R}^{d}}
+\newcommand{\exr}{[-\infty, \infty]}
+\newcommand{\Biggnorm}{\Bigg | \Bigg |}
+
+\NewDocumentCommand\closure{sm}
+  {\IfBooleanTF{#1}{\overline{#2}}{\bar{#2}}}
+
+\newenvironment{ex}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Solution]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+    
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+    
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+    
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+\begin{document}
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Homework 2} \hfill \today
+
+\begin{ex}{4}
+    Let $X$ be the space of $C^1$ functions on $[0,1]$ with $f(0) = 0$ and let
+    $$\langle f, g \rangle = \int_0^1 f'(x)\overline{g'(x)} dx$$
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $H$, the completion of $X$, is a reproducing kernel Hilbert space.
+        \begin{proof}
+            We want to show $H$ is a Hilbert space first. To show it is a Hilbert space then, we need to verify it is an inner product space. For this, we verify the inner product axioms.
+            \begin{enumerate}[label=(\roman*)]
+                \item \textit{(Linearity in the first Argument)} Let $f, g, h \in H$ and $a, b \in \mathbb{C}$. We note the following:
+                \begin{equation}
+                    \begin{aligned}
+                        \langle af + bg, h \rangle = \int_0^1 (af + bg)'(x)\overline{h'(x)} dx = \int_0^1 (af'(x) + bg'(x))\overline{h'(x)} dx \\
+                        = \int_0^1 af'(x)\overline{h'(x)} + bg'(x)\overline{h'(x)} dx = \int_0^1 af'(x)\overline{h'(x)} dx + \int_0^1 bg'(x)\overline{h'(x)} dx \\
+                        = a\int_0^1 f'(x)\overline{h'(x)} dx + b\int_0^1 g'(x)\overline{h'(x)} dx = a\langle f, h \rangle + b\langle g, h \rangle
+                    \end{aligned}
+                \end{equation}
+                \item \textit{(Conjugate symmetry)} Again, consider $f, g \in H$. We get the following:
+                \begin{equation}
+                    \begin{aligned}
+                        \langle g, f\rangle = \int_0^1 g'(x)\overline{f'(x)} dx = \int_0^1 (g'_r(x) + ig'_i(x))\overline{(f'_r(x) + if'_i(x))} dx \\
+                        = \int_0^1 (f'_r(x)g'_r(x) + f'_i(x)g'_i(x)) + i(g'_i(x)f'_r(x) - g'_r(x)f'_i(x)) dx \\  =  \int_0^1 (f'_r(x)g'_r(x)+ f'_i(x)g'_i(x)) dx + i \int_0^1 (g'_i(x)f'_r(x) - g'_r(x)f'_i(x)) dx \\
+                        = \overline{\int_0^1 (f'_r(x)g'_r(x)+ f'_i(x)g'_i(x)) dx  - i \int_0^1 (g'_i(x)f'_r(x) - g'_r(x)f'_i(x)) dx} \\
+                        = \overline{\int_0^1 (f'_r(x)g'_r(x)+ f'_i(x)g'_i(x)) - i(g'_i(x)f'_r(x) - g'_r(x)f'_i(x)) dx}  \\
+                        = \overline{\int_0^1 (f'_r(x) + if'_i(x))\overline{(g'_r(x) + ig'_i(x))} dx} = \overline{\int_0^1 f'(x)\overline{g'(x)}}= \overline{\langle f, g \rangle} 
+                    \end{aligned}
+                \end{equation}
+                \item \textit{(Positive-definiteness)} Let some $f \in H$. We note
+                \begin{equation}
+                    \langle f, f \rangle = \int_0^1 f'(x)\overline{f'(x)} dx = \int_0^1 |f'(x)|^2 dx \geq 0
+                \end{equation}
+                as $|f'(x)|^2$ is nonnegative. We want then $\langle f, f \rangle = 0$ iff $f = 0$. Obviously, the reverse direction holds. \\ \\
+                For the forward direction, it is clear we need to mod out by an equivalence relation, in particular $f = g$ iff $f' = g'$ almost everywhere. \\ \\ This should expected as this inner product is essentially the derivative version of the $L^2$ inner product. \\ \\
+                With this in mind, we note that by (3), it is clear that if $\langle f, f \rangle = 0$, we have $|f'(x)|^2 =0$ almost everywhere. Thus $|f'(x)| = 0$ a.e. and so finally $f'(x) = 0$ a.e.
+                \\ \\ In particular then, $f' = 0$ a.e., which has that $f = g$.        
+            \end{enumerate}
+            From this, it follows $H$ is an inner product space. Moreover, as $H$ is the completion of $X$ under the norm induced by this inner product, it is that $H$ is a Banach space. \\ \\ It follows $H$ is a Hilbert space. To show it is a reproducing kernel Hilbert space then, we need to show the evaluation functional $L_x : H \rightarrow \mathbb{C}$ is bounded for each $x \in [0,1]$. \\ \\
+            In particular, we let some $x \in [0,1]$. For $f \in X$, we get the following argument, appealing to H\"older's inequality and FTC (given the functions are $C^1$ and have $f(0) = 0$):
+            \begin{equation}
+                \begin{aligned}
+                |L_x(f)| = |f(x)| = \Big |\int_0^x f'(x) dx \Big | \leq \int_0^x |f'(x)| \\
+                \leq \sqrt{\int_0^x 1^2 dx}\sqrt{\int_0^x |f'(x)|^2 dx} \ \leq \sqrt{x}||f'||_2 = \sqrt{x}||f||_H
+                \end{aligned}
+            \end{equation}
+            In general for $f \in H$ we let $f_n \xrightarrow{H} f$ where $\{f_n\}_{n = 1}^\infty \subseteq X$. Substituting $|f_n(x) - f_m(x)|$ into (4) and taking the supremum over $x \in [0,1]$ gets us that
+            \begin{equation}||f_n - f_m||_\infty \leq ||f_n - f_m||_H\end{equation}
+            As the sequence is convergent in the $H$ norm, it is Cauchy in the $H$ norm, and so it follows then that $\{f_n\}_{n = 1}^\infty$ is Cauchy in the $L^\infty$ norm by (5). \\ \\
+            Recall $C[0,1]$ is complete with the $L^\infty$ norm, so as $\{f_n\}_{n = 1}^\infty \subseteq X \subseteq C[0,1]$ then, we have that for some $g \in C[0,1]$ that $f_n \xrightarrow{\infty} g$. Appealing to uniqueness then it should be that $g = f$ everywhere. \\ \\
+            As uniform convergence has pointwise convergence then, clearly
+            $$\underset{n \rightarrow \infty}{\lim}f_n(x) = g(x) = f(x),$$
+            which is that then 
+            $$\underset{n \rightarrow \infty}{\lim} |L_x(f_n)| = \underset{n \rightarrow \infty}{\lim} |f_n(x)| = |f(x)| = |L_x(f)|,$$
+            where we can substitute into (4), given that each $f_n \in X$, to get
+            $$|L_x(f)| = \underset{n \rightarrow \infty}{\lim} |L_x(f_n)| \leq \underset{n \rightarrow \infty}{\lim}\sqrt{x}||f_n||_H = \sqrt{x}||f||_H,$$
+            which shows the evaluation functional is bounded in general. 
+        \end{proof}
+        \item Prove that $K(x,y) = \min(x,y)$.
+        \begin{proof}
+            Let some $x \in [0,1]$. We first compute the derivative of $\min(x,\cdot)$ as a function of $y$, which intuitively is 
+            \begin{equation}
+                \text{min}'(x,y) = \begin{cases}
+                    1 & \text{if } y < x \\
+                    0 & \text{if } y > x
+                \end{cases} = \mathbbm{1}_{[0,x]}(y) \text{ a.e.}
+            \end{equation}
+            where the derivative is not necessarily defined at $y = x$. Recall then that $K(x,y) = k_x(y)$, where $k_x(y)$ is the unique element in $H$ such that for all $f \in H$ we have
+            $$f(x) = \langle f, k_x \rangle$$
+            As this element is unique, per the \textbf{Riesz Representation Theorem}, to prove $K(x,y) = \min(x,y)$, i.e. proving $k_x = \min(x, \cdot)$ as functions in $y$, we can show $f(x) = \langle f, \min(x, \cdot)\rangle$ for any given $f \in H$.
+            \\ \\ Consider $f \in H$. Let $\{f_n\}_{n = 1}^\infty \subseteq X$ where $f_n \xrightarrow{H} f$. Using our observation in (6), we get the following:
+            \begin{align*}
+                \langle f, \min(x, \cdot)\rangle = \langle \underset{n \rightarrow \infty}{\lim} f_n, \min(x, \cdot)\rangle \\
+                = \underset{n \rightarrow \infty}{\lim} \langle f_n, \min(x, \cdot)\rangle && \text{(Continuity of the inner product)} \\
+                = \underset{n \rightarrow \infty}{\lim} \int_0^x f'_n(y) \; dy && \text{(Applying our computation in (6))} \\
+                = \underset{n \rightarrow \infty}{\lim} f_n(x) && \text{(FTC)} \\
+                = \underset{n \rightarrow \infty}{\lim} L_x(f_n) = L_x(f) && \text{(Continuity of the evaluation functional)} \\
+                = f(x)
+            \end{align*}
+            Note the last part follows are continuous $\Leftrightarrow$ bounded. It follows then by the earlier argument that $\min(x, \cdot) = k_x$ as a function in $y$, and so 
+            $$K(x,y) = k_x(y) = \min(x,y),$$
+            for all $x, y$, which is the desired result.
+
+        \end{proof}
+    \end{enumerate}
+\end{ex}
+
+\begin{ex}{6}
+    Let $Y = \ell^1(\mathbb{N})$ and $X = \{f \in Y \; | \; \sum_{n = 1}^\infty n|f(n)| < \infty\}$ equipped with the $\ell^1$ norm. 
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $X$ is a proper dense subspace of $Y$, hence $X$ is not complete.
+        \begin{proof}
+            We need to verify that $X$ is a subspace, it is a proper one, and that it is dense.
+            \begin{enumerate}[label=(\roman*)]
+                \item \textit{(Subspace)} We need to verify that $X$ contains the zero vector and that it is closed under addition and scalar multiplication.
+                    \\ \\ Note trivially the zero vector (the zero sequence) is in $X$. Consider then $g, h \in X$, i.e. $\sum_{n = 1}^\infty n|f(n)| < \infty$ and $\sum_{n = 1}^\infty n|g(n)| < \infty$. Thus
+                    \begin{align*}
+                        \sum_{n = 1}^\infty n|(f + g)(n)| = \sum_{n = 1}^\infty n|f(n) + g(n)| \leq \sum_{n = 1}^\infty n|f(n)| + n|g(n)|  \\ = \sum_{n = 1}^\infty n|f(n)| + \sum_{n = 1}^\infty n|g(n)| < \infty,
+                    \end{align*}
+                    which has $f + g \in X$. Moreover for a scalar in our field $c$, we get
+                    \begin{align*}
+                        \sum_{n = 1}^\infty n|cf(n)| = \sum_{n = 1}^\infty n|c||f(n)| = |c|\sum_{n = 1}^\infty n|f(n)| < \infty,
+                    \end{align*}
+                    which has $cf \in X$, and so we get $X$ is a subspace.
+                \item \textit{(Properness)}
+                    Consider $f(n) = \frac{1}{n^2}$. By the $p$-series test, we note immediately $f \in \ell^1({\mathbb{N}}) = Y$. However we note
+                    $$\sum_{n = 1}^\infty n|f(n)| = \sum_{n = 1}^\infty \frac{1}{n} = \infty,$$
+                    so $f \notin X$. 
+                \item \textit{(Density)}
+                    Let $g \in Y \setminus X$. Then clearly we have $\sum_{n = 1}^\infty |g(n)| < \infty$. In particular then, by the \textbf{Cauchy Criterion for Series Convergence}, we have for every $\epsilon > 0$ that there exists an $M$ such that for all $m \geq M$ we have 
+                    $$\sum_{n = m}^\infty |g(n)| < \epsilon$$ 
+                    We construct $f$ then such that $f(n) = g(n)$ for $n < M$ and $f(n) = 0$ for $n \geq M$. We note immediately $f \in X$ as it only has finitely many nonzero terms. Note then 
+                    $$||f - g||_1 = \sum_{n = 1}^\infty |f(n) - g(n)| = \sum_{n = M}^\infty |g(n)| < \epsilon,$$
+                    and so as we can take $\epsilon$ arbitrarily small, we can always construct $f$ in a way that it is $\epsilon$-close to $g$. As our method of constructing $f$ always leads to a term in $X$ then, $X$ is dense. \\ \\
+                    *Note specifically if $g \in X$ we could just take the term to be $g$ itself.
+            \end{enumerate}
+        \end{proof}
+        \item Define $T$ from $X$ to $Y$ by $Tf(n) = nf(n)$. Then $T$ is closed but not bounded.
+        \begin{proof}
+            We need to show that $T$ is a closed mapping, but it is not bounded.
+            \begin{enumerate}[label=(\roman*)]
+                \item \textit{(Mapping is Closed)} Let $K$ be a closed set in $X$. \\ \\
+                That is by definiton that if we have $\{f_k\}_{k = 1}^\infty \subseteq K$ such that $f_k \xrightarrow{\ell^1} f$, then $f \in K$. \\ \\
+                We want to show that $T(K)$ is closed then. For this let $\{g_k\}_{n = 1}^\infty \subseteq T(K)$ be a convergent sequence in $T(K)$, i.e. $g_k \xrightarrow{\ell^1} g \in Y$. Then by the definition of $T(K)$, we get a corresponding sequence $\{f_k\}_{k = 1}^\infty \subseteq K$ where
+                $$g_k(n) = Tf_k(n) = nf_k(n)$$
+                for all $n \in \N$. Note this has that $nf_k \xrightarrow{\ell^1} g$, i.e.
+                $$\underset{k \rightarrow \infty}{\lim} \sum_{n = 1}^\infty |nf_k(n) - g(n)| = 0,$$
+                so we can appeal to limit rules to note then
+                $$\underset{k \rightarrow \infty}{\lim} \sum_{n = 1}^\infty \Big|f_k(n) - \frac{g(n)}{n}\Big| = 0,$$
+                i.e. if we define $h \in X$ but $h(n) = \frac{g(n)}{n}$, then $f_k \xrightarrow{\ell^1} h$. But $\{f_k\}_{k = 1}^\infty$ is a sequence in $K$, so as we assumed $K$ to be closed it is that $h \in K$. But then of course
+                $$Th(n) = nh(n) = n\frac{g(n)}{n} = g(n),$$
+                which is that $Th = g$. As $h \in K$ then, $g \in T(K)$. This shows closedness.
+            
+                \item \textit{(Unboundedness)} To show that $T$ is not bounded, we will produce a bounded sequence $\{f_k\}_{k = 1}^\infty \subseteq X$ where $\{Tf_k\}_{k = 1}^\infty \subseteq Y$ is unbounded. \\ \\
+                In particular, define $\{f_k\}_{k = 1}^\infty$ by
+                $$f_k(n) = \frac{1}{n^{2 + \frac{1}{k}}};$$
+                we note clearly for each $k$ that $f_k \in X$ as 
+                $$\sum_{n = 1}^\infty n|f_k(n)| = \sum_{n = 1}^\infty \frac{n}{n^{2 + \frac{1}{k}}} = \sum_{n = 1}^\infty \frac{1}{n^{1 + \frac{1}{k}}} < \infty$$
+                where convergence of the last series follows from the $p$-series test with $p = 1 + \frac{1}{k} > 1$. Moreover, we establish the sequence is bounded as for each $k$ we have
+                $$||f_k||_1 = \sum_{n = 1}^\infty \frac{1}{n^{2 + \frac{1}{k}}} \leq \sum_{n = 1}^\infty \frac{1}{n^2} < \infty,$$
+                where convergence of the last series again follows from the $p$-series test. We consider now the $\ell^1$ norm of the image sequence, i.e.
+                $$||Tf_k||_1 = \sum_{n = 1}^\infty \frac{n}{n^{2 + \frac{1}{k}}} = \sum_{n = 1}^\infty \frac{1}{n^{1 + \frac{1}{k}}},$$
+                which has 
+                $$\underset{k \rightarrow \infty}{\lim\inf} ||Tf_k||_1 = \underset{k \rightarrow \infty}{\lim\inf} \sum_{n = 1}^\infty \frac{1}{n^{1 + \frac{1}{k}}}$$
+                by simply applying the $\lim\inf$ to both sides. As $\forall n, k \in N$ we have $\frac{1}{n^{1 + \frac{1}{k}}} > 0$, we can apply \textbf{Fatou's Lemma for Series}, which gets
+                $$\infty = \sum_{n = 1}^\infty \frac{1}{n} = \sum_{n = 1}^\infty \underset{k \rightarrow \infty}{\lim\inf} \frac{1}{n^{1 + \frac{1}{k}}} \leq \underset{k \rightarrow \infty}{\lim\inf} \sum_{n = 1}^\infty \frac{1}{n^{1 + \frac{1}{k}}} = \underset{k \rightarrow \infty}{\lim\inf} ||Tf_k||_1,$$
+                i.e. $\{Tf_k\}_{k = 1}^\infty$ diverges off to $\infty$. As we have produced a bounded sequence that is unbounded under the image, this consequently shows $T$ is unbounded. 
+            \end{enumerate}
+        \end{proof}
+        \item Let $S = T^{-1}$. Prove that $S: Y \rightarrow X$ is bounded and surjective but not open.
+        \begin{proof}
+            To verify the existence of $S$ we show $T$ is injective and surjective.
+            \begin{enumerate}[label=(\roman*)]
+                \item \textit{(Injectivity)} Let $f, g \in X$ such that $Tf = Tg$, we want to show $f = g$. Note we have
+                \begin{align*}
+                    Tf = Tg \\
+                    \rightarrow Tf(n) = Tg(n), \forall n \in \N \\
+                    \rightarrow nf(n) = ng(n), \forall n \in N \\
+                    \rightarrow f(n) = g(n), \forall n \in N && \text{(Dividing by }n) \\
+                    \rightarrow f = g
+                \end{align*}
+                And so $T$ is an injection.
+                \item \textit{(Surjectivity)} Let $g \in Y$. We want $f \in X$ such that $Tf = g$. \\ \\
+                As $g \in Y$, we have that $\sum_{n = 1}^\infty |g(n)| < \infty$. We define $h \in X$ then by
+                $$h(n) = \frac{g(n)}{n}$$
+                In particular, we note $h \in X$ as 
+                $$\sum_{n = 1}^\infty n|h(n)| = \sum_{n = 1}^\infty n \Big | \frac{g(n)}{n} \Big | = \sum_{n = 1}^\infty |g(n)| < \infty,$$
+                and so we finally note $Th = g$, as $Th(n) = nh(n) = n\frac{g(n)}{n} = g(n)$. Thus $h \mapsto g$ under $T$, and so we have surjectivity.
+            \end{enumerate}
+            It follows $T$ is a bijection, so it has a set-theoretic inverse $S = T^{-1}$, which is assuredly also a surjection as the inverse is also a bijection. \\ \\ We want to show then $S$ is bounded but not open.
+            \begin{enumerate}[label=(\roman*)]
+                \item \textit{(Boundedness)} Recall boundedness of $S$ on $Y$ is equivalent to continuity of $S$ on $Y$. In particular, we remember $S$ is continuous on $Y$ if for every closed set $F \subseteq X$ we have
+                $$S^{-1}(F) \text{ is a closed set in } Y,$$
+                but of course
+                $$S^{-1}(F) = (T^{-1})^{-1}(F) = T(F),$$
+                where we showed $T$ is a closed mapping, i.e. $T(F)$ is closed. It follows $S$ is continuous on $Y$, and thus bounded.
+                \item \textit{(Mapping is not Open)} Assume for the sake of contradiction $S$ is an open mapping, i.e. for every open set $\mathcal{O} \subseteq Y$ we have
+                $$S(\mathcal{O}) \text{ is an open set in }X,$$
+                but this generates a contradiction as we recall $T$ is bounded iff it is continuous, and this implies continuity of $T$ as we have for every open set in $\mathcal{O} \subseteq Y$ that
+                $$T^{-1}(\mathcal{O}) = S(\mathcal{O}) \text{ is an open set in }X,$$
+                so here $T$ is bounded, but we showed earlier this in not the case. It follows $S$ must not be an open mapping.
+            \end{enumerate}
+            It follows $S$ is a surjection that is bounded but not open.
+        \end{proof}
+    \end{enumerate}
+\end{ex}
+
+\begin{ex}{16}
+    Let $\text{Lip}[0,1] = \{f \in C[0,1] \; | \: f \text{ is Lipschitz}\}$, and for each $n \geq 1$ let $F_n = \{f \in C[0,1] \; : \; |f(x) - f(y)| \leq n|x - y|, \; \forall x, y \in [0,1]\}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove for each $n \geq 1$, $F_n$ is a closed, nowhere dense subset of $\text{Lip}[0,1]$.
+        \begin{proof}
+            Let $n \in N$ and consider the corresponding $F_n$. We need to verify $F_n$ is closed and nowhere dense (clearly it is a subset, given the definition of Lipschitz).
+            \begin{enumerate}[label=(\roman*)]
+                \item \textit{(Closedness)} Let $\{f_k\}_{k = 1}^\infty \subseteq F_n$ such that $f_k \rightarrow f$ uniformly. We want to show $f \in F_n$. For this, let $\epsilon > 0$ and take $K$ such that $||f - f_k||_\infty < \epsilon$ for $k \geq K$. \\ \\
+                Moreover, let $x, y \in [0,1]$. We note the following:
+                \begin{align*}
+                |f(x) - f(y)| = |f(x) - f_k(x) + f_k(x) - f_k(y) + f_k(y) - f(y)| \\
+                \leq |f(x) - f_k(x)| + |f_k(x) - f_k(y)| + |f_k(y) - f(y)| \\
+                \leq 2||f - f_k||_\infty + n|x - y| < 2\epsilon + n|x - y|
+                \end{align*}
+                Taking $\epsilon \rightarrow 0$ then, we note $|f(x) - f(y)| \leq n|x - y|$. Thus $f \in F_n$.
+                \item \textit{(Nowhere Dense)} We want to show the closure of each $F_n$, i.e. $\closure{F}_n$, has empty interior. As $F_n$ is closed, $\closure{F}_n = F_n$, so we are just showing $F_n$ has empty interior. \\ \\
+                Assume for the sake of contradiction that $F_n$ does not have empty interior, i.e. there some $f \in F_n$ such that for some $r > 0$ we have $B_r(f) \subseteq F_n$. To get a contradiction, we first prove a small lemma.
+                \begin{lemma}{1}
+                    Let $f \in \text{Lip}[0,1]$. Then for $c > 0$, $f + c\sqrt{x} \notin \text{Lip}[0,1]$.
+                    \begin{proof}
+                        Let some $f \in \text{Lip}[0,1]$ with Lipschitz constant $K \geq 0$. Recall that Lipschitz functions are differentiable a.e., and their derivatives are bounded by their Lipschitz constants, i.e. here
+                        $$|f'(x)| \leq K$$
+                    To show $f + c\sqrt{x} \notin \text{Lip}[0,1]$ then, it suffices to show its derivative is unbounded, i.e. $\forall M \geq 0$, we have some $x \in [0,1]$ for which 
+                    $$\Big |f'(x) + \frac{c}{2\sqrt{x}} \Big | > M$$
+                    Let $M \geq 0$. Take $\{x_n\}_{n = 1}^\infty \subseteq [0,1]$ such that $x_n \rightarrow 0$ then. As $c > 0$, we know 
+                    $$\underset{n \rightarrow \infty}{\lim} \; \frac{c}{2\sqrt{x_n}} = \infty,$$
+                    and moreover we have by use of the reverse triangle inequality that
+                    $$\frac{c}{2\sqrt{x}} - |f'(x)| \leq \Big | \frac{c}{2\sqrt{x}} - |f'(x)| \Big | \leq \Big |f'(x) + \frac{c}{2\sqrt{x}} \Big |$$
+                    We take $N \in \N$ then such that $\frac{c}{2\sqrt{x_N}} \geq M + K$ (which exists as the limit diverges to $\infty$), which substituing into the previous inequality gets
+                    $$M \leq \frac{c}{2\sqrt{x_N}} - K \leq \frac{c}{2\sqrt{x_N}} - |f'(x_N)| \leq \Big | \frac{c}{2\sqrt{x_N}} - |f'(x_N)| \Big | \leq \Big |f'(x_N) + \frac{c}{2\sqrt{x_N}} \Big |$$
+                    and so the derivative is unbounded. It follows $f + c\sqrt{x} \notin \text{Lip}[0,1]$.
+                    \end{proof}
+                \end{lemma}
+                Return then to our $f$ such that $B_{r}(f) \subseteq F_n$. Consider the function $g$ defined by 
+                $$g(x) = f(x) + \frac{r}{2}\sqrt{x}$$
+                As $f$ is Lipschitz, \textbf{Lemma 1} shows that $g$ is not. But this is problematic as we see 
+                $$||f - g||_\infty = \underset{x \in [0,1]}{\sup} |f(x) - g(x)| = \underset{x \in [0,1]}{\sup} \Big |\frac{r}{2}\sqrt{x} \Big| = \frac{r}{2},$$
+                which renders a contradiction as then $g \in B_r(f) \subseteq F_n$, i.e. $g$ should be Lipschitz. It follows $F_n$ must have empty interior, and so it is nowhere dense.
+            \end{enumerate}
+            It follows for each $n \in \N$ that $F_n$ is closed and nowhere dense.
+    \end{proof} 
+    \item Conclude that $\text{Lip}[0,1]$ is a countable union of nowhere dense subsets of $C[0,1]$.
+    \begin{proof}
+        Note the definition of each $F_n$ is precisely the set of Lipschitz functions with Lipschitz constant at most $n$. It follows then immediately that 
+        $$\bigcup_{n = 1}^\infty F_n \subseteq \text{Lip}[0,1]$$
+        Moreover, letting an arbitrary $f \in C[0,1]$ with Lipschitz constant $K \geq 0$, we note there is some $N \in \N$ such that $N \geq K$ by the Archimedean principle. \\ \\
+        For $x, y \in [0,1]$ then we have 
+        $$|f(x) - f(y)| \leq K|x - y| \leq N|x - y|,$$
+        i.e. $f \in F_N \subseteq \bigcup_{n = 1}^\infty F_n$, and so 
+        $$\text{Lip}[0,1] \subseteq \bigcup_{n = 1}^\infty F_n,$$
+        and so of course
+        $$\text{Lip}[0,1] = \bigcup_{n = 1}^\infty F_n,$$
+        i.e. $\text{Lip}[0,1]$ is a countable union of nowhere dense sets, as the $F_n$ are nowhere dense as proven in (a).
+    \end{proof}
+    \end{enumerate}
+\end{ex}
+
+\begin{ex}{17}
+    Let $f$ be a nonnegative Lebesgue measurable function defined on $\mathbb{R}$. Assume that for all $g \in L^2(\mathbb{R})$ we have $fg \in L^1(\mathbb{R})$. Prove that $T_f(g) = \int_\mathbb{R} gf$ is a bounded linear functional on $L^2(\mathbb{R})$ and conclude that $f \in L^2(\mathbb{R})$. 
+    \begin{proof}
+        Note first that $T_f(g)$ is linear given distributivity of multiplication and the linearity of the integral.
+        \\ \\
+        We want to show $T_f(g)$ is a bounded linear functional on $L^2(\mathbb{R})$, i.e. for all $g \in L^2(\mathbb{R})$ we have 
+        $$|T_f(g)| = \Big | \int_\mathbb{R} gf \Big | \leq C||g||_2,$$
+        for some $C \geq 0$ not dependent on $g$. Consider then the family of sets $\{E_k\}_{k = 1}^\infty$ where 
+        $$E_k = [-k,k];$$
+        for any given $E_k$ then, we define $f_k : \mathbb{R} \rightarrow \mathbb{R}$ by 
+        \begin{equation}
+            f_k(x) = \begin{cases}
+                \min(f(x), k) & \text{ if } x \in E_k \\
+                0 & \text{ if } x \notin E_k 
+            \end{cases}
+        \end{equation}
+        which gives a family of functions the nonnegative functions $\{f_k\}_{k = 1}^\infty$. We note that each $f_k$ is measurable relatively easily, as the minimum of two measurable functions is measurable. \\ \\
+        In particular, we know $\min(f, k)$ is measurable. For $a > 0$ then, the set $\{f_k \geq a\}$ is just $\{\min(f,k) \geq a\} \cap E_k$, which is measurable as it is the intersection of measurable sets. \\ \\
+        If instead $a \leq 0$, then clearly the set $\{f_k \geq a\}$ is just $\mathbb{R}$, which is also measurable. Thus each function in $\{f_k\}_{k = 1}^\infty$ is measurable. With this, we can quickly establish each is in $L^2(\mathbb{R})$, as 
+        \begin{align*}
+            ||f_k||_2 = \sqrt{\int_\mathbb{R} |f_k|^2} = \sqrt{\int_{E_k} |f_k|^2} \leq \sqrt{\int_{E_k} k^2} = \sqrt{2k^3} < \infty,
+        \end{align*}
+        i.e. each $f_k$ has finite $2$-norm. Consider then the corresponding family of functionals on $L^2(\mathbb{R})$ given by 
+        $$T_k(g) = \int_\mathbb{R} gf_k,$$
+        i.e. consider $\{T_k\}_{k = 1}^\infty$. Linearity of each $T_k$ follows trivially from distributivity and linearity of the integral. Moreover, we note for $g \in L^2(\mathbb{R})$ has
+        \begin{align*}
+            |T_k(g)| = \Big | \int_\mathbb{R} gf_k \Big | \leq \int_\mathbb{R} |gf_k| = ||gf_k||_1 \leq ||g||_2||f_k||_2 \leq \sqrt{2k^3}||g||_2,
+        \end{align*}
+        given our work in the previous part. It follows every functional in the family $\{T_k\}_{k = 1}^\infty$ is bounded and linear. \\ \\
+        Our goal now is to apply the \textbf{Uniform Boundedness Principle}. For this, consider some fixed $g \in L^2(\mathbb{R})$. Moreover, let $k \in \N$. As $f_k \leq f$ by definition, we get 
+        $$|T_k(g)| = \Big | \int_\mathbb{R} f_kg \Big | \leq \int_\mathbb{R} |f_kg| \leq \int_\mathbb{R} |fg| = ||fg||_1 < \infty,$$
+        where we recall $||fg||_1 < \infty \Leftrightarrow fg \in L^1(\mathbb{R})$ by assumption. Thus we have shown $|T_k(g)| \leq ||fg||_1$, and so 
+        $$\underset{k \in \N}{\sup} \; |T_k(g)| \leq ||fg||_1 < \infty$$
+        for all $g \in L^2(\mathbb{R})$. Thus the \textbf{Uniform Boundedness Principle} applies, in particular we get 
+        $$\underset{k \in \N}{\sup} \; ||T_k|| < \infty,$$
+        i.e. the supremum over the operator norms is finite. We want then to conclude that 
+        $$||T_f|| \leq \underset{k \in \N}{\sup} \; ||T_k||,$$
+        i.e. $||T_f||$ is finite $\Leftrightarrow$ $T_f$ is bounded. For this, first note it must be that $f$ is finite a.e., as if it were infinite on a set $A$ of positive measure, we could choose $g \in L^2(\mathbb{R})$ to be an indicator function of a measurable subset of $A$ with finite measure. \\ \\
+        The resulting product $fg$ would then of course not be finite a.e., but this would contradict that it should be $fg \in L^1(\mathbb{R})$. \\ \\ 
+        As $f$ is finite a.e. then, it is clear that for each $g \in L^2(\mathbb{R})$ where $||g||_2 = 1$ (also finite a.e.) $gf_k \rightarrow gf$ pointwise a.e. by construction (and these functions are measurable). Moreover we recall 
+        $$|gf_k| \leq |gf|$$
+        where of course $|fg| \in L^1(\mathbb{R})$. It follows we can apply the \textbf{Dominated Convergence Theorem}, i.e. 
+        $$|T_f(g)| = \Big |\int_{\mathbb{R}} gf \Big | = \Big | \underset{k \rightarrow \infty}{\lim} \int_\mathbb{R} g_fk \Big | = | \underset{k \rightarrow \infty}{\lim} T_k(g) | = \underset{k \rightarrow \infty}{\lim} |T_k(g)| \leq \underset{k \rightarrow \infty}{\lim\inf} ||T_k|| \leq \underset{k \in \N}{\sup} ||T_k||,$$
+        where this then holds for all $g \in L^2(\mathbb{R})$ with unit norm, so taking the supremum over $g \in L^2(\mathbb{R})$ with unit norm gets 
+        $$||T_f|| = \underset{||g||_2 = 1}{\sup} |T_f(g)| \leq \underset{k \in \N}{\sup} ||T_k||,$$
+        and so we get the desired inequality. In particular this shows $||T_f|| = \underset{g \neq 0}{\sup} \; \frac{|T_f(g)|}{||g||_2}$ is finite, and so for $g \neq 0$ we have
+        $$\frac{|T_f(g)|}{||g||_2} \leq ||T_f|| \longrightarrow |T_f(g)| \leq ||T_f||||g||_2,$$
+        where this trivally holds for $g = 0$. Thus we $T_f(g)$ is bounded with $C = ||T_f||$. \\ \\
+        We want now to conclude then $f \in L^2(\mathbb{R})$. For this, note by the \textbf{Riesz Representation Theorem} that there is a unique $h \in L^2(\mathbb{R})$ such that for all $g$ 
+        $$T_f(g) = \langle g, h \rangle,$$
+        i.e. we have
+        $$\int_\mathbb{R} gf = \int_\mathbb{R} gh$$
+        for all $g \in L^2(\mathbb{R})$. It follows in particular that 
+        $$0 = \int_\mathbb{R} gf - \int_\mathbb{R} gh = \int_\mathbb{R} gf - gh = \int_\mathbb{R} g(f - h) = 0$$
+        for all $g \in L^2(\mathbb{R})$. Let then $g$ an indicator function of a finite interval $I$ then. Clearly $g \in L^2(\mathbb{R})$, so this has 
+        $$\int_\mathbb{R} g(f - h) = \int_I f - h = 0,$$
+        but we know that if the integral of a function is zero over every interval the only possibility is that it equals zero almost everywhere (this was proven in \textit{Math 235}). \\ \\ Thus it must be $f = h$ a.e., as so as $h$ is in $L^2(\mathbb{R})$ it follows $f \in L^2(\mathbb{R})$ as desired.
+    \end{proof}
+\end{ex}
+
+\begin{ex}{19}
+    Let $\mathcal{B}$ a Banach space, and $S$ a closed proper subspace. Fix some $f_0 \notin S$. Show that there is a continuous linear functional $\gamma$ such that $\gamma(f) = 0$ for all $f \in S$ and $\gamma(f_0) = 1$. \\ \\ Moreover, show that we may choose the linear functional such that $||\gamma|| = \frac{1}{d}$, where $d$ is the distance from $f_0$ to $S$.
+    \begin{proof}
+        We first want to establish that $d > 0$. In particular, we denote this must be the case because if the distance were $0$, we could find a sequence $\{s_n\} \subseteq S$ such that $$\underset{n \rightarrow \infty}{\lim} ||f_0 - s_n|| = 0,$$ 
+        which would have that $f_0 \in S$ appealing to the closure of $S$, but this is a contradiction. \\ \\
+        Define then the vector subspace $T$ by 
+        $$T = \text{span}\{S, f_0\},$$
+        which is indeed trivially a subspace of $\mathcal{B}$ given the definition of span. Moreover, by the definition of span we know we can represent each element $t \in T$ like 
+        $$t = s_t + \lambda_tf_0,$$
+        where $s_t \in S$ and $\lambda_t$ a scalar. We claim this representation is unique. On the contrary, suppose we had $t = s_t + \lambda_tf_0 = s'_t + \lambda'_tf_0$. It follows 
+        \begin{align*}
+            (s_t - s'_t) + (\lambda_t - \lambda'_t)f_0 = 0,
+        \end{align*}
+        but as $f_0 \in S$ then the only possibility is that $(\lambda_t - \lambda'_t)f_0 = 0$ and so $(s_t - s'_t) = 0$. In particular, otherwise we would have 
+        $$-f_0 = \frac{(s_t - s'_t)}{(\lambda_t - \lambda'_t)},$$
+        which immediately has $f_0 \in S$ using subspace properties. It follows $s_t = s'_t$ and $a_t - a'_t = 0$, i.e. $a_t = a'_t$. Thus the representation is unique. \\ \\
+        With this in mind, define the functional $\delta : T \rightarrow K$, where $K$ is the field $\mathcal{B}$ is vector space over. In particular, define $\delta$ for $t \in T$ by
+        $$\delta(t) = \lambda_t,$$
+        where $\lambda_t$ is defined as above. Note this mapping is well-defined per the uniqueness we proved. Consider $t, t' \in T$ then, we show linearity of $\delta$ in a straightforward way:
+        $$\delta(t + t') = \delta(s_t + \lambda_tf_0 + s_{t'} + \lambda_{t'}f_0) = \delta((s_t + s_{t'}) + (\lambda_t + \lambda_{t'})f_0) = \lambda_t + \lambda_{t'} = \delta(t) + \delta(t')$$
+        Where of course $s_t + s_{t'} \in S$. Moreover, for additional constant $k \in K$ we get 
+        $$\delta(kt) = \delta(k(s_t + \lambda_tf_0)) = \delta(ks_t + k\lambda_tf_0) = k\lambda_t = k\delta(t),$$
+        and so $\delta$ is assuredly linear. \\ \\
+        Note then by construction we have $\delta \vert_S = 0$, each element $s \in S$ has $\lambda_S = 0$, as they have the representation $s = s + 0\cdot f_0$. Similarly, $\delta(f_0) = 1$. \\ \\
+        We need to show then that $\delta$ is bounded and that $||\delta|| = \frac{1}{d}$. \\ \\
+        Consider then some vector $t$ in $T$. We assume without loss of generality that $\lambda_t \neq 0$, as as otherwise $\delta(t) = 0$ which is trivially bounded. \\ \\
+        It follows $\lambda_t$ has an inverse, so we write 
+        $$t = s_t + \lambda_tf_0 = \lambda_t(\lambda_t^{-1}s_t + f_0),$$
+        where we furthermore get that 
+        $$||t|| = ||\lambda_t(\lambda_t^{-1}s_t + f_0)|| = |\lambda_t|||\lambda_t^{-1}s_t + f_0||$$
+        Note then we have $\lambda_t^{-1}s_t \in S$, as $S$ is a subspace. It follows then that $||\lambda_t^{-1}s_t + f_0|| \geq d$ by the definition $d$. \\ \\
+        In particular, we recall 
+        $$d = \underset{s \in S}{\inf} ||f_0 - s||,$$
+        so taking $s = -\lambda_t^{-1}s_t$ suffices to show we have a lower bound by $d$. Thus 
+        \begin{align*}
+            ||t|| = |\lambda_t|||\lambda_t^{-1}s_t + f_0|| \geq |\delta(t)|d \\
+            \longrightarrow |\delta(t)| \leq \frac{1}{d}||t||,
+        \end{align*}
+        and so taking the supremum over unit norm $t$ has $||\delta|| \leq \frac{1}{d}$, and of course that $||d||$ exists. \\ \\
+        To show $\frac{1}{d} \leq ||\delta||$ then, consider the sequence that minimizes the distance, i.e. the sequence $\{s_n\}_{n = 1}^\infty \subseteq S$ such that $||f_0 - s_n|| \rightarrow d$ as $n \rightarrow \infty$. Then we have 
+        $$1 = |\delta(f_0)| = |\delta(f_0 - s_n)| \leq ||\delta||||f_0 - s_n||,$$
+        where taking the limit thus gets $1 \leq ||\delta||d$. It follows $\frac{1}{d} \leq ||\delta||$, and so $||\delta|| = \frac{1}{\delta}$. \\ \\
+        Using \textbf{Corollary 2.2} from Heil then, as $\delta \in T^*$, we have there exists a $\gamma \in \mathcal{B}^*$ such that 
+        $$\gamma \vert_T = \delta \text{ and } ||\gamma|| = ||\delta|| = \frac{1}{d},$$
+        so in particular as we have $\gamma \vert_T = \delta$ we have $\gamma(f) = 0$ for $f \in S$ and $\gamma(f_0) = 1$. This concludes the problem. 
+    \end{proof}
+\end{ex}
+
+\end{document}
