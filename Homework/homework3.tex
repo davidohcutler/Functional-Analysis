@@ -34,7 +34,46 @@
 \noindent David Owen Horace Cutler \hfill {\Large Math 237: Homework 2} \hfill \today
 
 \begin{ex}{1}
-    example
+    Show that the only function $f \in L^1(\mathbb{R})$ such that $f = f * f$ is $f = 0$ a.e. 
+    \begin{proof}
+        Let $f \in L^1(\mathbb{R})$ such that $f = f * f$. Recall we have that by Heil \textbf{Exercise 9.2.6} that then 
+        $$\hat{f} = (f * f)\hat{\;} = \hat{f}\hat{f},$$
+        so for any particular $\xi$ we have 
+        $$\hat{f}(\xi)^2 - \hat{f}(\xi) = 0,$$
+        so we consequently have 
+        $$\hat{f}(\xi) = 0 \text{ or } 1, \quad \forall \xi \in \mathbb{R}.$$
+        Recall then that $\hat{f}$ is continuous on $\mathbb{R}$; it trivially follows that it thus must be either identically 0 or identically 1. \\ \\
+        However, the $\textbf{Riemann-Lebesgue Lemma}$ guarentees that $|\hat{f}|$ should decay to $0$ as $|x| \rightarrow \infty$; so the only possibility is that $\hat{f}$ is constantly 0. \\ \\
+        Note then clearly $\hat{0} = 0$; by the \textbf{Uniqueness Theorem} then, as we thus have $\hat{f} = \hat{0}$, it must be then that $f = 0 \text{ a.e.}$, as desired
+    \end{proof}
+\end{ex}
+
+\begin{ex}{6}
+    Suppose $f \in \text{AC}(\mathbb{T})$, i.e., $f$ is $1$-periodic and absolutely continuous on $[0,1]$.
+    \begin{enumerate}[label=6.\arabic*]
+        \item Prove that $\hat{f'}(n) = 2\pi in\hat{f}(n)$ for $n \in \mathbb{Z}$ and conclude $\underset{|n| \rightarrow \infty}{\lim} n\hat{f}(n) = 0$.
+        \begin{proof}
+            By assumption $f \in AC(\mathbb{T})$. We know of course that $e^{2\pi in\xi}$ is furthermore absolutely continuous are we observe it is continuously differentiable. \\ \\
+            Thus, we can apply \textbf{Integration by Parts}, which gets us the following (note $\frac{d}{d\xi} e^{-2\pi in\xi} = -2\pi ine^{-2\pi in\xi}$):
+            \begin{align*}
+                \hat{f'}(n) = \int_0^1 f'(\xi) e^{-2\pi i n\xi} d\xi \\
+                = e^{-2\pi in\xi}f(1) - f(0) - \int_0^1 -2\pi in f(\xi)e^{-2\pi in \xi} d\xi \\
+                = e^{-2\pi in\xi}f(1) - f(0) + 2\pi i n \hat{f}(n)
+            \end{align*}
+            We note then that for any value of $n \in \mathbb{Z}$, we have $e^{-2\pi in\xi} = 1$. Moreover, as $f$ is $1$-periodic, we have $f(0) = f(1)$. Thus we can further reduce 
+            \begin{align*}
+                e^{-2\pi in\xi}f(1) - f(0) + 2\pi i n \hat{f}(n) \\
+                = 2\pi in\hat{f}(n),
+            \end{align*}
+            as desired. Recall the by the \textbf{Riemann-Lebesgue Lemma} we know 
+            $$\underset{|n| \rightarrow \infty}{\lim} |\hat{f'}(n)| = 0,$$
+            and thus 
+            $$\underset{|n| \rightarrow \infty}{\lim} |\hat{f'}(n)| = \underset{|n| \rightarrow \infty}{\lim} |2\pi i n \hat{f}(n)| = \underset{|n| \rightarrow \infty}{\lim} 2\pi n |\hat{f}(n)| = 0,$$
+            where from limit rules multiplying by $\frac{1}{2\pi}$ gets the limit of $n|\hat{f}(n)|$ as $0$, which clearly implies the same for $n\hat{f}(n)$, as additionally desired.
+        \end{proof}
+        \item Show that if $\int_0^1 f(x) dx = 0$, then 
+        $$\int_0^1 |f(x)|^2 dx \leq \frac{1}{4\pi^2} \int_0^1 |f'(x)|^2 dx$$
+    \end{enumerate}
 \end{ex}
 
 \end{document}
