@@ -76,4 +76,26 @@
     \end{enumerate}
 \end{ex}
 
+\begin{ex}{12}
+    Fix $g \in L^2(\mathbb{R})$. Prove that $\{T_kg = g(\cdot - k)\}_{k \in \mathbb{Z}}$ is an orthonormal sequence if and only if 
+    $$\sum_{k \in \mathbb{Z}} |\hat{g}(\xi - k)|^2 = 1 \text{ a.e.}$$
+    \begin{proof}
+        Let $n, m \in \mathbb{Z}$. We can derive the following:
+        \begin{align*}
+            \langle T_ng, T_mg \rangle \\
+            = \int_{-\infty}^\infty T_ng(x)\overline{T_mg(x)}dx \\
+            = \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi && \text{(Parseval's Theorem)} \\
+            = \int_{-\infty}^\infty e^{-2\pi in\xi}\hat{g}(\xi)\overline{e^{-2\pi im\xi}\hat{g}(\xi)} d\xi && \text{(Identity for transform of translation)} \\
+            = \int_{-\infty}^\infty e^{-2\pi in\xi}\overline{e^{-2\pi im\xi}}\hat{g}(\xi)\overline{\hat{g}(\xi)} d\xi && \text{(Modulus is multiplicative)} \\
+            = \int_{-\infty}^\infty e^{-2\pi i(n + m)\xi}|\hat{g}(\xi)|^2 d\xi && (z\overline{z} = |z|^2) \\
+            = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} e^{-2\pi i(n + m)\xi}|\hat{g}(\xi)|^2 d\xi \\
+            = \sum_{k \in \mathbb{Z}} \int_0^1 e^{{-2\pi i}(n + m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Translating the integral)}\\
+            = \int_0^1 \sum_{k \in \mathbb{Z}} e^{{-2\pi i}(n + m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Fubini's Theorem)} \\
+            = \int_0^1 \sum_{k \in \mathbb{Z}} e^{-2\pi i(n + m)\xi}|\hat{g}(\xi + k)|^2 d\xi \\
+            = \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n + m)\xi} d\xi
+        \end{align*}
+        Say then the given sequence is orthonormal.
+    \end{proof}
+\end{ex}
+
 \end{document}
