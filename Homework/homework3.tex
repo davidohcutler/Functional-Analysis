@@ -87,14 +87,24 @@
             = \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi && \text{(Parseval's Theorem)} \\
             = \int_{-\infty}^\infty e^{-2\pi in\xi}\hat{g}(\xi)\overline{e^{-2\pi im\xi}\hat{g}(\xi)} d\xi && \text{(Identity for transform of translation)} \\
             = \int_{-\infty}^\infty e^{-2\pi in\xi}\overline{e^{-2\pi im\xi}}\hat{g}(\xi)\overline{\hat{g}(\xi)} d\xi && \text{(Modulus is multiplicative)} \\
-            = \int_{-\infty}^\infty e^{-2\pi i(n + m)\xi}|\hat{g}(\xi)|^2 d\xi && (z\overline{z} = |z|^2) \\
-            = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} e^{-2\pi i(n + m)\xi}|\hat{g}(\xi)|^2 d\xi \\
-            = \sum_{k \in \mathbb{Z}} \int_0^1 e^{{-2\pi i}(n + m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Translating the integral)}\\
-            = \int_0^1 \sum_{k \in \mathbb{Z}} e^{{-2\pi i}(n + m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Fubini's Theorem)} \\
-            = \int_0^1 \sum_{k \in \mathbb{Z}} e^{-2\pi i(n + m)\xi}|\hat{g}(\xi + k)|^2 d\xi \\
-            = \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n + m)\xi} d\xi
+            = \int_{-\infty}^\infty e^{-2\pi i(n - m)\xi}|\hat{g}(\xi)|^2 d\xi && (z\overline{z} = |z|^2, \overline{e^{-2\pi im\xi}} = e^{2\pi im\xi}) \\
+            = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} e^{-2\pi i(n - m)\xi}|\hat{g}(\xi)|^2 d\xi \\
+            = \sum_{k \in \mathbb{Z}} \int_0^1 e^{{-2\pi i}(n - m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Translating the integral)}\\
+            = \int_0^1 \sum_{k \in \mathbb{Z}} e^{{-2\pi i}(n - m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Fubini's Theorem)} \\
+            = \int_0^1 \sum_{k \in \mathbb{Z}} e^{-2\pi i(n - m)\xi}|\hat{g}(\xi + k)|^2 d\xi \\
+            = \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n - m)\xi} d\xi
         \end{align*}
-        Say then the given sequence is orthonormal.
+        Define $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$. Note here then that (by translating the integral back)
+        $$\int_0^1 \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2  d\xi = \int_{-\infty}^\infty |\hat{g}(\xi)|^2 d\xi < \infty,$$
+        where the last part follows as $g \in L^2(\mathbb{R}) \rightarrow \hat{g} \in L^2(\mathbb{R})$. \\ \\ 
+        We also observe the $1$-periodicity of $\sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$, which is obvious as $k$ varies over all $\mathbb{Z}$ (redoing the last equation with the bounds $n, n+1$ shows existence a.e. of this sum). \\ \\
+        Thus $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \in L^1(\mathbb{T})$; so its Fourier transform is defined. We can continue then:
+        \begin{align*}
+            \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n - m)\xi} d\xi \\
+            = \int_0^1 H(\xi)e^{-2\pi i(n - m)\xi}d\xi \\
+            = \hat{H}(n -m)
+        \end{align*}
+        it's pretty obv from here and the earlier ending of the first set of equations, use uniqueness and boom
     \end{proof}
 \end{ex}
 
