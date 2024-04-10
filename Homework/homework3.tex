@@ -44,7 +44,7 @@
         $$\hat{f}(\xi) = 0 \text{ or } 1, \quad \forall \xi \in \mathbb{R}.$$
         Recall then that $\hat{f}$ is continuous on $\mathbb{R}$; it trivially follows that it thus must be either identically 0 or identically 1. \\ \\
         However, the $\textbf{Riemann-Lebesgue Lemma}$ guarentees that $|\hat{f}|$ should decay to $0$ as $|x| \rightarrow \infty$; so the only possibility is that $\hat{f}$ is constantly 0. \\ \\
-        Note then clearly $\hat{0} = 0$; by the \textbf{Uniqueness Theorem} then, as we thus have $\hat{f} = \hat{0}$, it must be then that $f = 0 \text{ a.e.}$, as desired
+        Note then clearly $\hat{0} = 0$; by the \textbf{uniqueness of Fourier transforms} then, as we thus have $\hat{f} = \hat{0}$, it must be then that $f = 0 \text{ a.e.}$, as desired
     \end{proof}
 \end{ex}
 
@@ -54,7 +54,7 @@
         \item Prove that $\hat{f'}(n) = 2\pi in\hat{f}(n)$ for $n \in \mathbb{Z}$ and conclude $\underset{|n| \rightarrow \infty}{\lim} n\hat{f}(n) = 0$.
         \begin{proof}
             By assumption $f \in AC(\mathbb{T})$. We know of course that $e^{2\pi in\xi}$ is furthermore absolutely continuous are we observe it is continuously differentiable. \\ \\
-            Thus, we can apply \textbf{Integration by Parts}, which gets us the following (note $\frac{d}{d\xi} e^{-2\pi in\xi} = -2\pi ine^{-2\pi in\xi}$):
+            Thus, we can apply \textbf{integration by parts}, which gets us the following (note $\frac{d}{d\xi} e^{-2\pi in\xi} = -2\pi ine^{-2\pi in\xi}$):
             \begin{align*}
                 \hat{f'}(n) = \int_0^1 f'(\xi) e^{-2\pi i n\xi} d\xi \\
                 = e^{-2\pi in\xi}f(1) - f(0) - \int_0^1 -2\pi in f(\xi)e^{-2\pi in \xi} d\xi \\
@@ -84,27 +84,76 @@
         \begin{align*}
             \langle T_ng, T_mg \rangle \\
             = \int_{-\infty}^\infty T_ng(x)\overline{T_mg(x)}dx \\
-            = \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi && \text{(Parseval's Theorem)} \\
+            = \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi && \text{(Parseval's Theorem)}
+        \end{align*}
+        We would like to say now that $(T_mg)\hat{\;}(\xi) = e^{-2\pi i m \xi}\hat{g}(\xi)$ for a.e. $\xi$, i.e. we have the translation identity for $L^2(\mathbb{R})$ functions. 
+        \\ \\ For this, define $g_R = \mathbbm{1}_{[-R, R]}g$. Then clearly each $g_R$ is in $L^2(\mathbb{R})$, as as we have $L^2 \subseteq L^1$ on bounded domains we have $g_R \in L^1(\mathbb{R})$, i.e. the Fourier transform is defined. \\ \\
+        Note then 
+        \begin{align*}
+            (T_m g_R)\hat{\;}(\xi) \\
+            = \int_{-\infty}^\infty T_mg_R(x)e^{-2\pi i \xi x}dx \\ 
+            = \int_{-\infty}^\infty g(x- m)e^{-2\pi i \xi x}dx \\ 
+            = \int_{-\infty}^\infty g(u)e^{-2\pi i \xi (u + m)}dx && (u-\text{substitution}) \\
+            = \int_{-\infty}^\infty \Big ( g_R(u)e^{-2\pi i \xi u} \Big)e^{-2\pi i \xi m} \\
+            = e^{-2\pi i \xi m} \int_{-\infty}^\infty g_R(u)e^{-2\pi i \xi u} \\ 
+            = e^{-2\pi i \xi m} \hat{g_R}(\xi),
+        \end{align*}
+        moreover, note we have $g_R \xrightarrow{L^2} g$. Thus, by definition, for $g \in L^2(\mathbb{R})$ it is precisely $\hat{g} = \underset{R \rightarrow \infty}{\lim} \hat{g_R}$. Thus we get 
+        \begin{align*}
+            (T_m g)\hat{\;} \\
+            = \Big (T_m \Big (\underset{R \rightarrow \infty}{\lim} g_R \Big)\Big)\hat{\;} \\
+            = \Big ( \underset{R \rightarrow \infty}{\lim} T_mg_R \Big)\hat{\;} && \text{(Translation commutes with limit)} \\ 
+            = \underset{R \rightarrow \infty}{\lim} (T_mg_R)\hat{\;} && \text{(Fourier transform operator is unitary)} \\
+            = \underset{R \rightarrow \infty}{\lim} e^{-2\pi i m\xi}(g_R)\hat{\;} \\
+            = e^{-2\pi i m\xi} \underset{R \rightarrow \infty}{\lim} \hat{g_R} \\
+            = e^{-2\pi i m\xi}\hat{g},
+        \end{align*}
+        where this equality is in the $L^2$ sense, i.e. precisely that $(T_mg)\hat{\;}(\xi) = e^{-2\pi i m \xi}\hat{g}(\xi)$ for a.e. $\xi$. Thus we can continue our derivation:
+        \begin{align*}
+            \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi \\
             = \int_{-\infty}^\infty e^{-2\pi in\xi}\hat{g}(\xi)\overline{e^{-2\pi im\xi}\hat{g}(\xi)} d\xi && \text{(Identity for transform of translation)} \\
             = \int_{-\infty}^\infty e^{-2\pi in\xi}\overline{e^{-2\pi im\xi}}\hat{g}(\xi)\overline{\hat{g}(\xi)} d\xi && \text{(Modulus is multiplicative)} \\
             = \int_{-\infty}^\infty e^{-2\pi i(n - m)\xi}|\hat{g}(\xi)|^2 d\xi && (z\overline{z} = |z|^2, \overline{e^{-2\pi im\xi}} = e^{2\pi im\xi}) \\
             = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} e^{-2\pi i(n - m)\xi}|\hat{g}(\xi)|^2 d\xi \\
-            = \sum_{k \in \mathbb{Z}} \int_0^1 e^{{-2\pi i}(n - m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Translating the integral)}\\
+            = \sum_{k \in \mathbb{Z}} \int_0^1 e^{{-2\pi i}(n - m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Translating the integral)}
+        \end{align*} 
+        We would like now to interchange the sum and integral. This is possible as a special case of Fubini's Theorem, with respect to the counting measure on $\mathbb{Z}$ and Lebesgue measure on $\mathbb{R}$. \\ \\
+        In particular, refer temporarily to $f_{n,m}$ as the integrand. Then we have the following, as our exponenial always falls on the unit circle in the complex plane:
+        $$\int_0^1 \sum_{k \in \mathbb{Z}} |f_{n,m}| = \int_0^1 \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 = \int_{k}^{k + 1} \sum_{k \in \mathbb{Z}} |\hat{g}(\xi)|^2,$$
+        where monotone convergence, given the non-negativity of each $|\hat{g}(\xi)|^2$, has 
+        $$\int_{k}^{k + 1}\sum_{k \in \mathbb{Z}} |\hat{g}(\xi)|^2 = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} |\hat{g}(\xi)|^2 = \int_{\infty}^\infty |\hat{g}(\xi)|^2 < \infty,$$
+        where the finiteness of the last term follows as $g \in L^2(\mathbb{R}) \rightarrow \hat{g} \in L^2(\mathbb{R})$. \\ \\
+        Thus $\int_0^1 \sum_{k \in \mathbb{Z}} |f_{n,m}|$ is finite; by Tonelli's theorem then, again with respect to the counting and Lebesgue measures, $\sum_{k \in \mathbb{Z}} \int_0^1 |f_{n,m}|$ is as well. Thus the hypotheses for Fubini's theorem are fulfilled, and we interchange the sum. We continue then:
+        \begin{align*}
+            \sum_{k \in \mathbb{Z}} \int_0^1 e^{{-2\pi i}(n - m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi \\
             = \int_0^1 \sum_{k \in \mathbb{Z}} e^{{-2\pi i}(n - m)(\xi + k)}|\hat{g}(\xi + k)|^2 d\xi && \text{(Fubini's Theorem)} \\
             = \int_0^1 \sum_{k \in \mathbb{Z}} e^{-2\pi i(n - m)\xi}|\hat{g}(\xi + k)|^2 d\xi \\
             = \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n - m)\xi} d\xi
         \end{align*}
-        Define $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$. Note here then that (by translating the integral back)
-        $$\int_0^1 \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2  d\xi = \int_{-\infty}^\infty |\hat{g}(\xi)|^2 d\xi < \infty,$$
-        where the last part follows as $g \in L^2(\mathbb{R}) \rightarrow \hat{g} \in L^2(\mathbb{R})$. \\ \\ 
-        We also observe the $1$-periodicity of $\sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$, which is obvious as $k$ varies over all $\mathbb{Z}$ (redoing the last equation with the bounds $n, n+1$ shows existence a.e. of this sum). \\ \\
+        Define $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$. Note then our earlier work done to show we can apply Fubini's theorem has $H \in L^1(\mathbb{R})$. \\ \\
+        We also observe the $1$-periodicity of $\sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$, which is obvious as $k$ varies over all $\mathbb{Z}$. \\ \\
         Thus $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \in L^1(\mathbb{T})$; so its Fourier transform is defined. We can continue then:
         \begin{align*}
             \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n - m)\xi} d\xi \\
             = \int_0^1 H(\xi)e^{-2\pi i(n - m)\xi}d\xi \\
             = \hat{H}(n -m)
         \end{align*}
-        it's pretty obv from here and the earlier ending of the first set of equations, use uniqueness and boom
+        Which is essentially the final fact we need. Assume then $\{T_kg\}_{k \in \mathbb{Z}}$ is an orthonormal sequence; then by our work we get the Fourier coefficients of $H$ as 
+        \begin{equation*}\hat{H}(i) = \begin{cases}
+            1 \quad \text{ if } i = 0 \\
+            0 \quad \text{ if } i \neq 0 
+        \end{cases} = \delta(i), \end{equation*}
+        where $\delta$ is the Dirac delta function. Using the \textbf{uniqueness of Fourier coefficients} then, we must have $H = 1 \text{ a.e.}$, as the Dirac delta function gives precisely the Fourier coefficients of $1$. \\ \\
+        Thus we have $H = 1 \text{ a.e.}$, which is precisely $\sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 = 1 \text{ a.e.}$ \\ \\
+        Assume then instead we have $\sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 = 1 \text{ a.e.}$; we recall in the process of our derivation we also established
+        $$\langle T_ng, T_mg \rangle = \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n - m)\xi} d\xi,$$
+        so under our assumption this clearly just becomes 
+        $$\langle T_ng, T_mg \rangle = \int_0^1 e^{-2\pi i(n - m)\xi}.$$
+        When $n = m$, the integrand is $1$, so the integral reduces to $1$. When $n \neq m$, we can apply the \textbf{FTC} (note the integrand is continuous) to get
+        \begin{align*}\int_0^1 e^{-2\pi i(n - m)\xi} = \frac{-e^{-2\pi i (n - m)}}{2 \pi i (n -m)} - \Bigg ( - \frac{1}{2\pi i (n-m)} \Bigg) \\
+            - \frac{1}{2\pi i (n-m)} - \Bigg ( - \frac{1}{2\pi i (n-m)} \Bigg ) = 0,
+        \end{align*}
+        which in tandem with the previous fact clearly shows that $\{T_kg\}_{k \in \mathbb{Z}}$ is an orthonormal sequence. Thus we have shown both directions, and we are done.
     \end{proof}
 \end{ex}
 
