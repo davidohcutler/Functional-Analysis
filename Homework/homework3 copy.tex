@@ -161,44 +161,76 @@
     Let $p(x) = \mathbbm{1}_{[0,1)}(x)$ and $h(x) = \mathbbm{1}_{[0, \frac{1}{2})} -\mathbbm{1}_{[\frac{1}{2}, 1)}$. For $j, k \in \mathbb{Z}$, set $I_{j,k} = [2^{-j}k, 2^{-j}(k + 1))$ and define 
     \begin{equation*}
         \begin{cases}
-            p_{jk}(x) = 2^{\frac{j}{2}}p(2^jx - k) \\
-            h_{jk}(x) = 2^{\frac{j}{2}}k(2^jx - k)
+            p_{j,k}(x) = 2^{\frac{j}{2}}p(2^jx - k) \\
+            h_{j,k}(x) = 2^{\frac{j}{2}}h(2^jx - k)
         \end{cases}
     \end{equation*}
-    \begin{enumerate}
-        \item Prove that $\{h_{jk}\}$ is an orthonormal sequence in $L^2(\mathbb{R})$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that $\{h_{j,k}\}_{j, k \in \mathbb{Z}}$ is an orthonormal sequence in $L^2(\mathbb{R})$.
         \begin{proof}
             Let $j, k, j', k' \in \mathbb{Z}$ and consider $h_{jk}$ and $h_{j'k'}$. By the definition of $h_{jk}$, we can write 
-            $$h_{jk} = 2^{\frac{j}{2}} (\mathbbm{1}_{I_{j + 1, 2k}} - \mathbbm{1}_{I_{j + 1, 2k + 1}}),$$
-            with the same idea for $h_{j'k'}$. We evaluate the real inner product then:
-            $$\langle h_{j,k}, h_{j',k'} \rangle = \int_{-\infty}^\infty h_{j,k}h_{j',k'} = \int_{\infty} 2^{\frac{j}{2}} (\mathbbm{1}_{I_{j + 1, 2k}} - \mathbbm{1}_{I_{j + 1, 2k + 1}})2^{\frac{j'}{2}} (\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}})$$
+            $$h_{j,k}(x) = 2^{\frac{j}{2}}(\mathbbm{1}_{[0, \frac{1}{2})}(2^jx - k) - \mathbbm{1}_{[\frac{1}{2}, 1)}(2^jx - k)).$$
+            We inspect $\mathbbm{1}_{[0, \frac{1}{2})}(2^jx - k)$ first, note this function precisely is 
+            \begin{equation*}
+                \mathbbm{1}_{[0, \frac{1}{2})}(2^jx - k) = 
+                \begin{cases}
+                    1 & \text{if } 0 \leq 2^jx - k < \frac{1}{2} \\
+                    0 & \text{otherwise}
+                \end{cases},
+            \end{equation*}
+            where we note the following inequalities are equivalent:
+            \begin{align*}
+                0 \leq 2^j x - k < \frac{1}{2} \\
+                k \leq 2^j x < \frac{1}{2} + k \\
+                2^{-j}k \leq x < 2^{-j - 1} + 2^{-j}k \\
+                2^{-j - 1}(2k) \leq x < 2^{-j - 1}(2k + 1),
+            \end{align*}
+            i.e. that $x \in I_{j + 1, 2k}$. Thus this function reduces to $\mathbbm{1}_{j + 1, 2k}$. Performing a similar analysis on the other function then, we note we can write
+            $$h_{j,k} = 2^{\frac{j}{2}} (\mathbbm{1}_{I_{j + 1, 2k}} - \mathbbm{1}_{I_{j + 1, 2k + 1}}),$$
+            with the same for $h_{j'k'}$. We evaluate the real inner product then:
+            $$\langle h_{j,k}, h_{j',k'} \rangle = \int_{-\infty}^\infty h_{j,k}h_{j',k'} = \int_{-\infty}^\infty 2^{\frac{j}{2}} (\mathbbm{1}_{I_{j + 1, 2k}} - \mathbbm{1}_{I_{j + 1, 2k + 1}})2^{\frac{j'}{2}} (\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}})$$
             We can expand the integrand (ignoring the power of $2$) to get 
             \begin{align*}
                 (\mathbbm{1}_{I_{j + 1, 2k}} - \mathbbm{1}_{I_{j + 1, 2k + 1}})(\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}) \\ = \mathbbm{1}_{I_{j + 1, 2k}}\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j + 1, 2k}}\mathbbm{1}_{I_{j' + 1, 2k' + 1}} - \mathbbm{1}_{I_{j + 1, 2k + 1}}\mathbbm{1}_{I_{j' + 1, 2k'}} + \mathbbm{1}_{I_{j + 1, 2k + 1}}\mathbbm{1}_{I_{j' + 1, 2k' + 1}}
             \end{align*}
             Say then first that $k = k'$ and $j = j'$. Then this reduces to 
             $$\mathbbm{1}_{I_{j + 1, 2k}} + \mathbbm{1}_{I_{j' + 1, 2k + 1}}$$
-            as the two middle terms vanish as we have that $I_{n,k}$ and $I_{n,k + 1}$ are disjoint for $n \in \mathbb{Z}$. Additionally, the square of an indicator function is itself. \\ \\  
-            Integrating, we note
-            $$2^j\int_\infty^\infty \mathbbm{1}_{I_{j + 1, 2k}} + \mathbbm{1}_{I_{j + 1, 2k + 1}} = 2^j(2^{j - 1} + 2^{-j - 1}) = 1.$$
-            Suppose then that we $k \neq k'$. Then the first and last product of indicator functions vanish, as they indicate intervals which are disjoint, i.e. we reduce to
+            as the two middle terms vanish as we have that $I_{n,k}$ and $I_{n,k + 1}$ are disjoint for any particular $n \in \mathbb{Z}$ by definition. Additionally, the square of an indicator function is itself. \\ \\  
+            Integrating (adding back in the power of 2, note here $2^\frac{j}{2}2^\frac{j'}{2} = 2^\frac{j}{2}2^\frac{j}{2} = 2^j$), we note
+            $$2^j\int_{-\infty}^\infty \mathbbm{1}_{I_{j + 1, 2k}} + \mathbbm{1}_{I_{j + 1, 2k + 1}} = 2^j(2^{-j - 1} + 2^{-j - 1}) = 1;$$
+            this is the integral precisely because the two indicator function indicate disjoint intervals, where the length of both is intervals is $2^{-j - 1}$. \\ \\
+            Suppose then that we have $k \neq k'$. Then the first and last product of indicator functions vanish, as they indicate intervals which are disjoint, i.e. we reduce to
             $$- \mathbbm{1}_{I_{j + 1, 2k}}\mathbbm{1}_{I_{j + 1, 2k' + 1}} - \mathbbm{1}_{I_{j + 1, 2k + 1}}\mathbbm{1}_{I_{j + 1, 2k'}},$$
-            still under the assumption $j = j'$. We note then each product vanishes as long as we don't have $2k = 2k' + 1$ or $2k' = 2k + 1$ (as then the intervals are disjoint in the products), but this is automatically true as we have no integer that is even \textit{and} odd. \\ \\ 
-            Say then $j \neq j'$. We assume without loss of generality that $j < j'$, i.e. $2^-j > 2^{- j - 1}$. This assumption allows us to "nest" dyadic intervals, i.e. it guarentees the existence of some $I_{j,n}$ in which $I_{j', 2k'}$ and $I_{j', 2k' + 1}$ are properly contained. \\ \\
+            still under the assumption $j = j'$. \\ \\ We note then each product vanishes as long as we don't have $2k = 2k' + 1$ or $2k' = 2k + 1$ (as then the intervals are disjoint in the products), but this is automatically true as we have no integer that is even \textit{and} odd. \\ \\ 
+            Thus this the integral evaluates to $0$ in this case. \\ \\
+            Say then $j \neq j'$. We assume without loss of generality that $j < j'$, i.e. $j + 1 < j' + 1$ such that $2^{-j - 1} > 2^{- j' - 1}$. This assumption allows us to "nest" dyadic intervals, i.e. it guarentees the existence of some $I_{j + 1,n}$ in which $I_{j' +1, 2k'}$ and $I_{j' + 1, 2k' + 1}$ are properly contained. \\ \\This fact is obvious if we constructing dyadic intervals iteratively for each value $j \in \mathbb{Z}$. If one wishes for explicit proof, we just note that we have by definition
+            $$I_{j' + 1, 2k'} \cup I_{j' + 1, 2k' + 1} = I_{j', k'};$$
+            this of course is true precisely because the following are equivalent:
+            \begin{align*}
+                x \in I_{j' + 1, 2k'} \cup I_{j' + 1, 2k' + 1} \\
+                2^{-j' - 1}(2k') \leq x < 2^{-j' - 1}(2k' + 1) \text{ or } 2^{-j' - 1}(2k' + 1) \leq x < 2^{-j' - 1}(2k' + 2) \\
+                2^{-j'}k' \leq x < 2^{-j}(k' + 1) \\
+                x \in I_{j', k'}
+            \end{align*}
+            Continuing this then, we can say something like
+            $$I_{j', k'} \cup I_{j', k' + 1} = I_{j' - 1, n_1}$$
+            when $k'$ is even, i.e. $k' = 2n_1$. If $k'$ is odd, the same result holds by viewing $k' = 2n_1 + 1$ and taking the second interval as $I_{j', k' - 1}$.\\ \\
+            As $j < j'$ then, we can iteratively repeat this process $i$ many times until $j' - i = j$, where then we will have a chain of unions having the desired containment in $I_{j,n}$ for some $n$. \\ \\
+            Moreover, it is clear this $n$ is unique, as $I_{j, m}$ is disjoint with $I_{j,n}$ for $n \neq m$. \\ \\
             A consequence of this is that as we get $j + 1 < j' + 1$, it is either that 
             $$I_{j' + 1, 2k'}, I_{j' + 1, 2k' + 1} \subseteq I_{j + 1, 2k},$$
             or neither is contained at all. Similarly, we have either 
             $$I_{j' + 1, 2k'}, I_{j' + 1, 2k' + 1} \subseteq I_{j + 1, 2k + 1},$$
-            or neither is contained. \textbf{more justification? even number?} Additionally, if we have that these two intervals were contained in $I_{j + 1, 2k}$, then they couldn't be contained in $I_{j + 1, 2k+1}$, and vice versa. \\ \\
+            or neither is contained. Additionally, if we have that these two intervals were contained in $I_{j + 1, 2k}$, then they couldn't be contained in $I_{j + 1, 2k+1}$, and vice versa. \\ \\
             Notice then that we can recast the integrand (sans the power of 2) as 
             $$\mathbbm{1}_{I_{j + 1, 2k}} (\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}) + \mathbbm{1}_{I_{j + 1, 2k + 1}}(\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}).$$
-            Our previous reasoning regarding the containment of intervals thus has that at least one these terms vanishes. \\ \\
+            Our previous reasoning regarding the containment of intervals thus has that at least one of these terms vanishes (again, as containment in $I_{j + 1, 2k}$ or $I_{j + 1, 2k + 1}$ is mutually exclusive). \\ \\
             If both vanish, we are done. If one does not vanish then, our reasoning has that it must be (i.e. if the first term is the sole survivor) that 
             $$I_{j' + 1, 2k'}, I_{j' + 1, 2k' + 1} \subseteq I_{j + 1, 2k}.$$
             Then, inspecting the integral, we get 
             $$\int_{-\infty}^\infty \mathbbm{1}_{I_{j + 1, 2k}} (\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}) = \int_{-\infty}^\infty \mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}};$$
             where there intervals both have length $2^{-(j' + 1)}$ and are necessarily disjoint. Thus as we have opposite sign of the indicators, the integral vanishes. \\ \\
-            We have consequently exhaustively completed all cases, so we can conclude $\{h_{j,k}\}$ is an orthnormal sequence in $L^2(\mathbb{R})$ as expected.
+            We have consequently exhaustively completed all cases, so we can conclude $\{h_{j,k}\}_{j, k \in \mathbb{Z}}$ is an orthnormal sequence in $L^2(\mathbb{R})$ as expected.
 
 
 
@@ -206,8 +238,8 @@
         \end{proof}
         \item For $j \in \mathbb{Z}$, show that $\{p_{jk}\}_{k \in \mathbb{Z}}$ is an orthnormal sequence in $L^2(\mathbb{R})$. 
         \begin{proof}
-            Consider some fixed $j \in \mathbb{Z}$. We can perform a similar "trick" to the previous part, i.e. we can express 
-            $$p_{jk} = 2^{\frac{j}{2}}\mathbbm{1}_{I_{j,k}}$$
+            Consider some fixed $j \in \mathbb{Z}$. We can perform a similar ``trick" to the previous part, i.e. we can express (much more obviously)
+            $$p_{j,k} = 2^{\frac{j}{2}}\mathbbm{1}_{I_{j,k}}$$
             given that $2^jx - k$ sends $2^{-j}k$ to $0$ and $2^{j}k + 1$ to $1$, i.e. it linearly interpolates $[-2^{-j}k, 2^{-j}k + 1)$ onto $[0,1)$. \\ \\
             We can view the inner product $\langle p_{jk}, p_{jk'} \rangle$ then. Expanding we get 
             $$\langle p_{jk}, p_{jk'} \rangle = \int_{-\infty}^\infty 2^{\frac{j}{2}}\mathbbm{1}_{I_{j,k}}2^{\frac{j}{2}}\mathbbm{1}_{I_{j,k'}} = 2^j\int_{-\infty}^\infty \mathbbm{1}_{I_{j,k}}\mathbbm{1}_{I_{j,k'}}$$
@@ -220,17 +252,21 @@
         $$r_{j - 1}(x) = \sum_{k \in \mathbb{Z}} a_{j - 1}(k)h_{j - 1, k}(x)$$
         for some coefficients $\{a_{j - 1}(k)\}_{k \in \mathbb{Z}}$ and $g_{j - 1}(x)$ a step function constant on all intervals $I_{j - 1, k}$ for $k \in \mathbb{Z}$.
         \begin{proof}
-            Consider some $j \in \mathbb{Z}$ and the corresponding $g_j$. Note first we can decompose $I_{j - 1, k}$ as $I_{j, 2k} \cup I_{j, 2k + 1}$ by definition. \\ \\
-            Let then $n = g_j(I_{j, 2k})$ and $m = g_j(I_{j, 2k + 1})$. Take $g_{j - 1}(x) = \frac{n + m}{2}$ for $x \in I_{j - 1,k}$ and stipulate $a_{j - 1}(k) = 2^{\frac{1 - j}{2}}\frac{n - m}{2}$. It follows
-            \begin{align*}g_{j - 1}(x) + r_{j -1}(x) = \frac{n + m}{2} + \sum_{i \in \mathbb{Z}} a_{j - 1}(i)h_{j-1,i}(x) = \\ \frac{n + m}{2} + a_{j - 1}(k)h_{j-1,k}(x) = \frac{n + m}{2} + \frac{n - m}{2}2^{\frac{1 - j}{2}}2^\frac{j - 1}{2} \\ = \frac{n + m}{2} + \frac{n - m}{2} = n = g_j(x) \quad \text{for } x \in I_{j, 2k}, \end{align*}
+            Consider some $j \in \mathbb{Z}$ and the corresponding $g_j$. Note first we can decompose $I_{j - 1, k}$ as $I_{j, 2k} \cup I_{j, 2k + 1}$ as proven earlier. \\ \\
+            Let then $n = g_j(I_{j, 2k})$ and $m = g_j(I_{j, 2k + 1})$. Take $g_{j - 1}(x) = \frac{n + m}{2}$ for $x \in I_{j - 1,k}$ and stipulate $a_{j - 1}(k) = 2^{\frac{1 - j}{2}}\frac{n - m}{2}$. It follows for $x \in I_{j,2k}$ that
+            \begin{align*}g_{j - 1}(x) + r_{j -1}(x) \\ = \frac{n + m}{2} + \sum_{i \in \mathbb{Z}} a_{j - 1}(i)h_{j-1,i}(x) \\ = \frac{n + m}{2} + a_{j - 1}(k)h_{j-1,k}(x) \end{align*}
+            Where the $k$th term in the sum is clearly the only one to survive as we have the earlier identity
+            $$h_{j - 1, k}(x) = 2^\frac{j-1}{2} (\mathbbm{1}_{I_{j, 2k}}(x) - \mathbbm{1}_{I_{j, 2k + 1}}(x)),$$
+            and so we can continue
+            \begin{align*}\frac{n + m}{2} + a_{j - 1}(k)h_{j-1,k}(x) \\ = \frac{n + m}{2} + \frac{n - m}{2}2^{\frac{1 - j}{2}}2^\frac{j - 1}{2} \\ = \frac{n + m}{2} + \frac{n - m}{2} = n = g_j(x) \end{align*}
             where we have a symmetric argument to get that $g_{j - 1}(x) + r_{j - 1}(x) = m$ for $x \in I_{j, 2k + 1}$; note all that changes is the sign of $h_{j - 1,k}(x)$, which gives the desired difference $\frac{n + m}{2} - \frac{n - m}{2} = m$. \\ \\
-            Thus on $I_{j - 1, k}$, we have $g_{j - 1} + r_{j - 1} = g_j$. We simply duplicate this construction for all other $k \in \mathbb{Z}$ to get the result in general.
+            Thus on $I_{j - 1, k}$, we have $g_{j - 1} + r_{j - 1} = g_j$. We simply duplicate this construction for all other $k \in \mathbb{Z}$ to get the result in general; this also has that the resultant $g_{j - 1}$ is constant on each $I_{j -1, k}$ for $k \in \mathbb{Z}$.
         \end{proof}
         \item Now fix $J \geq 0$ and consider 
         $$\{p_{J,k} : 0 \leq k \leq 2^J - 1\} \cup \{h_{j, k} : j \geq J \text{ and } 0 \leq k \leq 2^j - 1\}.$$
         Prove that this expression is an orthonormal sequence in $L^2[0,1]$.
         \begin{proof}
-            Note, as already proven, the former term in the expression is orthonormal with respect to $k \in \mathbb{Z}$, as is the latter with respect to $j, k \in \mathbb{Z}$. \\ \\
+            Note, as already proven, the former terms in the expression are orthonormal with respect to $k \in \mathbb{Z}$, as are the latter with respect to $j, k \in \mathbb{Z}$. \\ \\
             It follows all that we need to verify is that $\langle p_{J,k}, h_{j,k'} \rangle = 0$ for $j \geq J, 0 \leq k \leq 2^J - 1, 0 \leq k' \leq 2^j - 1$. \\ \\
             Consider then the following computation:
             \begin{align*}
@@ -250,28 +286,27 @@
         \begin{proof}
             Recall $C[0,1] \cap L^2[0,1]$ is dense in $L^2[0,1]$. We assume these spaces are real-valued to start, and consider $f \in C[0,1] \cap L^2[0,1]$. \\ \\
             Define then $g_J$ by stipulating 
-            $$g_J = \sum_{k \in \mathbb{Z}} \langle f, p_{J,k} \rangle p_{J,k}.$$
-            For $j \geq J$, define $g_{j + 1} = g_j + \sum_{k \in \mathbb{Z}} \langle f, h_{j,k}\rangle h_{j,k}$. Note then 
+            $$g_J = \sum_{k = 0}^{2^J - 1} \langle f, p_{J,k} \rangle p_{J,k}.$$
+            For $j \geq J$, define $g_{j + 1} = g_j + \sum_{k = 0}^{2^j - 1} \langle f, h_{j,k}\rangle h_{j,k}$. Note then 
             $$\langle f, p_{J,k} \rangle = \int_{[0,1]} fp_{J,k} = \int_{I_{J, k}} f2^{\frac{J}{2}}.$$
             We recall this integral is finite as we have the inclusion $L^2[0,1] \subseteq L^1[0,1]$ via application of H\"older's inequality. \\ \\
             Consider then $x \in I_{J,k}$. We get 
-            $$g_J(x) = \sum_{i \in \mathbb{Z}} \langle f, p_{J,i} \rangle p_{J,i}(x) = \langle f, p_{J,k} \rangle p_{J,k}(x) = 2^{\frac{J}{2}}\int_{I_{J, k}} f2^{\frac{J}{2}} = 2^J \int_{I_{J,k}} f.$$
+            $$g_J(x) = \sum_{k = 0}^{2^J - 1} \langle f, p_{J,i} \rangle p_{J,i}(x) = \langle f, p_{J,k} \rangle p_{J,k}(x) = 2^{\frac{J}{2}}\int_{I_{J, k}} f2^{\frac{J}{2}} = 2^J \int_{I_{J,k}} f.$$
             Recall then that $|I_{J,k}| = 2^{-J}$, so this is in particular that $g_J$ on $I_{J,k}$ takes on precisely the average value of $f$ over $I_{J,k}$. \\ \\
             We look now at the process for $g_{J + 1}$, calculating the inner product 
             $$\langle f, h_{J,k} \rangle = \int_0^1 f2^{\frac{J}{2}}(\mathbbm{1}_{I_{J + 1, 2k}} - \mathbbm{1}_{I_{J + 1, 2k + 1}}) = 2^{\frac{J}{2}} \Big ( \int_{I_{J + 1, 2k}} f - \int_{I_{J + 1, 2k + 1}} f \Big)$$
             Letting then $x \in I_{J + 1,k}$ then, we get 
             $$g_{J + 1}(x) = \langle f, p_{J, \lfloor \frac{k}{2} \rfloor}\rangle p_{J, \lfloor \frac{k}{2} \rfloor}(x) + \langle f, h_{J, \lfloor \frac{k}{2} \rfloor}\rangle h_{J, \lfloor \frac{k}{2} \rfloor}(x).$$
-            When $k$ is even, this reduces nicely to \textbf{sharpen by talking with Eric}
-            $$2^{\frac{J}{2}}(\langle f, p_{J,k} \rangle + \langle f, h_{J,k} \rangle),$$
+            When $k$ is even, this reduces nicely to 
+            $$2^{\frac{J}{2}}(\langle f, p_{J,\lfloor \frac{k}{2} \rfloor} \rangle + \langle f, h_{J,\lfloor \frac{k}{2} \rfloor} \rangle),$$
             whereas when $k$ is odd we get
-            $$2^{\frac{J}{2}}(\langle f, p_{J,k} \rangle - \langle f, h_{J,k} \rangle).$$
+            $$2^{\frac{J}{2}}(\langle f, p_{J,\lfloor \frac{k}{2} \rfloor} \rangle - \langle f, h_{J,\lfloor \frac{k}{2} \rfloor} \rangle).$$
             Looking at the former case, we get 
             \begin{align*}g_{J + 1}(x) = 2^J \Big (\int_{I_{J, \lfloor \frac{k}{2} \rfloor}} f + \int_{I_{J + 1, k}} f - \int_{I_{J + 1, k + 1}} f \Big) \\
                  = 2^J \Big (\int_{I_{J + 1, k}} f + \int_{I_{J + 1, k + 1}} f + \int_{I_{J + 1, k}} f - \int_{I_{J + 1, k + 1}} \Big) = 2^{J + 1}\int_{I_{J + 1, k}} f,
             \end{align*}
-            \textbf{try and actually write out the inductive step with help of Scott}
             which is precisely that $g_{J + 1}$ on $I_{J + 1,k}$ takes on the average value of $f$ on $I_{J + 1, k}$. \\ \\
-            In principle, we induct on this construction. In iterating this computation, we get $g_{J + n}$ takes on the average value of $f$ on each $I_{J + n, k}$ as we can think of each $h_{J + n, k}$ as a "difference of averages", i.e. with respect to the $I_{J + n + 1, 2k}$ and $I_{J + n + 1, 2k + 1}$ intervals. \\ \\
+            In principle, we induct on this construction. In iterating this computation, we get $g_{J + n}$ takes on the average value of $f$ on each $I_{J + n, k}$ as we can think of each $h_{J + n, k}$ as a ``difference of averages", i.e. with respect to the $I_{J + n + 1, 2k}$ and $I_{J + n + 1, 2k + 1}$ intervals. \\ \\
             Thus a similar calculation has that $g_{J + n + 1}$ takes on the average value of $f$ over each $I_{J + n + 1, k}$ interval and so on. \\ \\
             Note then as we assumed $f$ to be continuous, and $[0,1]$ is compact, it is that $f$ is uniformly continuous. Let then $\epsilon > 0$. Then there is a $\delta > 0$ such that 
             $$\forall x, y \in [0,1], \; |x - y| < \delta \longrightarrow |f(x) - f(y)| < \epsilon$$
@@ -281,119 +316,14 @@
             which is precisely the average of $f$ over the interval $I_{j,k}$. By the integral mean value theorem then, there is a $c \in I_{j, k}$ such that 
             $$f(c) = 2^J \int_{I_{J, k}} f = g_r(x).$$
             It follows
-            $$|f(x) - g_r(x)| \leq |f(x) - f(c)| + |f(x) - g_r(x)| < \epsilon$$
-            as $|c - d| < \delta$, given we took $I_{j,k}$ smaller than $\delta$. \\ \\
+            $$|f(x) - g_r(x)| \leq |f(x) - f(c)| + |f(c) - g_r(x)| < \epsilon$$
+            as $|x - d| < \delta$, given we took $I_{j,k}$ smaller than $\delta$. \\ \\
             As our choice of $x$ was arbitrary then, we get 
             $$||f - g_r||_\infty < \epsilon,$$
             i.e. we have $g_r$ converges to $f$ uniformly as $r \rightarrow \infty$. Thus $g_r$ also converges to $f$ in the $L^2$ norm, given $[0,1]$ is finite measure. \\ \\
             So we have that we can approximate $f$ with these sort of step functions. \\ \\As we can approximate any $L^2[0,1]$ function with a continuous function then, the triangle inequality has that we can approximate $L^2[0,1]$ functions with these step functions. \\ \\
             As each $g_r$ is just a sum of scaled $h_{j,k}$s and $p_{J,k}$s in $\{p_{J,k} : 0 \leq k \leq 2^J - 1\} \cup \{h_{j, k} : j \geq J \text{ and } 0 \leq k \leq 2^j - 1\}$ then, this demonstrates this collection is an orthonormal basis. \\ \\
             Recall then we assumed the our spaces were real-valued; note for this sake the complex case follows by splitting the complex-valued function into its real and complex parts.
-
-        \end{proof}
-    \end{enumerate}
-\end{ex}
-
-
-\begin{ex}{16}
-    Let $0 \neq \varphi \in L^2(\mathbb{R})$ and for each $f \in L^2(\mathbb{R})$ let $V_\varphi(f)$ be the function defined on $\mathbb{R}^2$ by 
-    $$V_\varphi f(x, \xi) = \int_{\mathbb{R}} f(t)\overline{\varphi(t - x)}e^{-2\pi i t \xi}dt.$$
-    For $a, b \in \mathbb{R}$, let $T_a$ be the translation operator by $a$ given by $(T_af(x) = f(x - a))$ and $M_b$ the modulation operator given by $b$ $(M_bf(x) = e^{2\pi i bx}f(x))$.
-    \begin{enumerate}[label=(\alph*)]
-        \item Prove that for each $f \in L^2(\mathbb{R})$, $V_\varphi(f)$ is uniformly continuous on $\mathbb{R}^2$ and that $\underset{|(x, \xi)| \rightarrow \infty}{\lim} V_\varphi f(x, \xi) = 0$. 
-        \begin{proof}
-            Note first we have
-            $$V_\varphi(x, \xi) = \int_\mathbb{R} f(t)\overline{\varphi(t - x)}e^{-2\pi i t\xi}dt = \int_{\mathbb{R}} f(t)\overline{\varphi(t - x)e^{2\pi it\xi}}dt = \langle f, M_\xi T_x \varphi \rangle.$$
-            We want first to establish that $||M_\xi f - f||_2 \rightarrow 0$ as $\xi \rightarrow 0$ (of course, note $M_\xi f \in L^2(\mathbb{R})$ as the exponential here always have modulus one). \\ \\
-            For this, we first note we have by the Plancherel equality and linearity that
-            $$||M_\xi f - f||_2 = ||(M_\xi f - f)\hat{\;}||_2 = ||(M_\xi f)\hat{\;} - \hat{f}||_2,$$
-            where we also note 
-            \begin{align*}
-                (M_\xi f)\hat{\;}(x) = \int_\mathbb{R} e^{2\pi it\xi}f(t)e^{-2\pi i tx}dt \\
-                = \int_\mathbb{R} f(t)e^{-2\pi i t(x - \xi)}dt \\
-                = \hat{f}(x - \xi) = T_\xi\hat{f}(x).
-            \end{align*}
-            Thus we can continue
-            $$||(M_\xi f)\hat{\;} - \hat{f}||_2 = ||T_\xi\hat{f} - \hat{f}||_2,$$
-            but of course this term $\rightarrow 0$ as $\xi \rightarrow 0$, as translation operator is continuous on $L^2(\mathbb{R})$. \\ \\
-            Let $\epsilon > 0$ then, and consider two arbitrary points $(x, \xi)$ and $(x', \xi')$. We get the following:
-            \begin{align*}
-                |V_\varphi(f)(x, \xi) - V_\varphi(f)(x', \xi')| \\
-                = |\langle f, M_\xi T_x \varphi \rangle - \langle f, M_{\xi'} T_{x'} \varphi \rangle| \\
-                = |\langle f, M_\xi T_x \varphi - M_{\xi'}T_{x'} \varphi \rangle| \\
-                \leq ||f||_2||||M_\xi T_x \varphi - M_{\xi'}T_{x'}||_2 && \text{(Cauchy-Schwarz inequality)} \\
-                \leq ||f||_2(||M_\xi T_x \varphi - M_{\xi'} T_{x} \varphi||_2 + ||M_{\xi'} T_{x}\varphi - M_{\xi'}T_{x'}\varphi||_2) && (\Delta-\text{inequality})
-            \end{align*}
-            Consider the first term in the sum then; for each point $t \in \mathbb{R}$ then note we have
-            $$M_{\xi}T_{x}\varphi(t) - M_{\xi'}T_{x}\varphi(t) = e^{2\pi it\xi}\varphi(t - x) - e^{2 \pi it\xi'}\varphi(t - x) = e^{2\pi it\xi'} \Big (e^{2\pi i t (\xi - \xi')}\varphi(t - x) - \varphi(t - x) \Big),$$
-            where the first term in the last product lies on the unit circle, i.e. it vanishes under modulus. It follows
-            $$||M_\xi T_x \varphi - M_{\xi'} T_{x} \varphi||_2 = ||M_{\xi - \xi'}T_x\varphi - T_x\varphi||_2,$$
-            which is precisely what we want. Specifically, note that our proof of the continuity of modulation guarentees the existence of a $\delta_1$ for which $|\xi - \xi'| < \delta_1$ has $||M_{\xi - \xi'}T_x\varphi - T_x\varphi||_2 < \frac{\epsilon}{2||f||_2}$. \\ \\
-            We can perform a similar analysis on the second term in the sum; note for any point $t \in \mathbb{R}$ we again get
-            $$M_{\xi'}T_x\varphi(t) - M_{\xi'}T_{x'}\varphi(t) = e^{2\pi it\xi'}\varphi(t - x) - e^{2\pi it\xi'}\varphi(t - x') = e^{2\pi it\xi'}(\phi(t - x) - \phi(t - x')),$$
-            such that 
-            $$||M_{\xi'}T_x\phi - M_{\xi'}T_{x'}||_2 = ||T_x\varphi - T_{x'}\varphi||_2.$$
-            Note then we have that 
-            \begin{align*}
-                ||T_x\varphi - T_{x'}\varphi||_2 = \int_{-\infty}^\infty |\varphi(t - x) - \varphi(t - x')|^2 dt \\
-                = \int_{-\infty}^\infty |\varphi(u - (x - x')) - \varphi(u)|^2 du && (u-\text{substitution}) \\
-                = ||T_{x - x'}\varphi - \varphi||_2,
-            \end{align*}
-            and so 
-            $$||M_{\xi'}T_x\phi - M_{\xi'}T_{x'}||_2 = ||T_{x - x'}\varphi - \varphi||_2,$$
-            where the continuity of translation guarentees the existence of a $\delta_2$ for which $|x - x'| < \delta_2$ has $||T_{x - x'}\varphi - \varphi||_2 < \frac{\epsilon}{2||f||_2}$. \\ \\
-            Take then $\delta = \max\{\sqrt{2}\delta_1, \sqrt{2}\delta_2\}$. If we have two points $(x, \xi)$ and $(x', \xi')$ such that 
-            $$||(x, \xi) - (x', \xi')|| < \delta$$
-            then, we necessarily have $|x - x'| < \delta_2$ and $|\xi - \xi'| < \delta_1$, which has by our previous work that 
-            \begin{align*}
-                |V_\varphi(f)(x, \xi) - V_\varphi(f)(x', \xi')| \leq ||f||_2(||M_\xi T_x \varphi - M_{\xi'} T_{x} \varphi||_2 + ||M_{\xi'} T_{x}\varphi - M_{\xi'}T_{x'}\varphi||_2) \\
-                \leq ||f||_2(\frac{\epsilon}{2||f||_2} + \frac{\epsilon}{2||f||_2}) = \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon,
-            \end{align*}
-            i.e. we have that $V_\phi(f)$ is uniformly continuous for all $f \in L^2(\mathbb{R})$. 
-            \\ \\
-            We want to show then then as $|(x, \xi)| \rightarrow \infty$ we have $V_\varphi(x, \xi) \rightarrow 0$. \\ \\
-            For this, we will use part (c) of this problem, which does not depend on this result; i.e. $V_\varphi(f)$ is $L^2(\mathbb{R}^2)$. \\ \\
-            With this in mind, assume for the sake of contradiction that $V_\varphi(f)$ does not go to zero; this is precisely that $|V_\varphi(f)|$ does not go to $0$ as $|(x, \xi)| \rightarrow \infty$. \\ \\
-            By the negation of convergence then, we have some sequence $a_n = (x_n, \xi_n)$ where $|a_n| \rightarrow \infty$ but for some $\epsilon > 0$ we have $|V_\varphi f(a_n)| > \epsilon, \forall n \in \mathbb{N}$. \\ \\
-            Using then uniform continuity with respect to $\frac{\epsilon}{2}$, we have a $\delta > 0$ such that 
-            $$\forall y \in \mathbb{R}^2 \quad |a_n - y| < \delta \longrightarrow |V_\varphi f(a_n) - V_\varphi f(y)| < \frac{\epsilon}{2};$$
-            using this in conjunction with our negation of convergence has consequently 
-            $$\forall y \in \mathbb{R}^2 \quad |a_n - y| < \delta \longrightarrow |V_\varphi f(y)| > \frac{\epsilon}{2}.$$
-            \textbf{commit this version and destroy this} Recall then we took $V_\varphi(f)$ as $L^2(\mathbb{R}^2)$, i.e. $|V_\varphi(f)|^2$ is integrable. Consider then the 2-cells $K_n$ where 
-            $$K_n = [-n, n] \times [-n, n].$$
-            We note 
-            $$\bigcup_{n = 1}^\infty = \mathbb{R}^2 \text{ and } K_i \subseteq K_{i + 1}  \text{ for all } i \in \mathbb{N}.$$
-            Thus we can apply some notion of continuity from below for the integral, i.e. we have 
-            $$\int_{\mathbb{R}^2} |V_\varphi(f)|^2 = \int_{\cup_{n = 1}^\infty K_n} |V_\varphi(f)|^2 = \underset{n \rightarrow \infty}{\lim} \int_{K_n} |V_\varphi(f)|^2;$$
-            which precisely has there is some $K_N$ where
-            $$\int_{\mathbb{R}^2} |V_\varphi(f)|^2 - \int_{K_N} |V_\varphi(f)|^2 < \epsilon.$$
-            Consider then a subsequence $a_{n_k}$ with the following prescriptions:
-            \begin{enumerate}[label=(\roman*)]
-                \item $|a_{n_k}|$ is strictly increasing. 
-                \item The distance between $a_{n_k}$ and $K_N$ is greater than $2\delta$ for all $k \in \mathbb{N}$. \\
-                \item $|a_{n_k} - a_{n_k'}| > 2\delta$ for all $k, k' \in \mathbb{N}$.
-            \end{enumerate}
-            Note these are all fair conditions to expect; that we can make it strictly increasing is obvious given divergence. \\ \\
-            For the second condition, this is fair to expect as $K_N$ is bounded, and so we can just have the modulus $|a_{n_k}|$ greater than the diameter of $K_N$. \\ \\
-            The third condition similarly follows from divergence by applying the definition of convergence to $\infty$ with the lower bound being $a_{n_k} + 2\delta$. \\ \\
-            We consider different $2$-cells, denoted $H_k$, where we define (recalling $a_n = (x_n, \xi_n)$)
-            $$H_k = [x_{n_k} - \frac{\delta}{2}, x_{n_k} + \frac{\delta}{2}] \times [\xi_{n_k} - \frac{\delta}{2}, \xi_{n_k} + \frac{\delta}{2}].$$
-            Then we have $|H_k| = \delta^2$. Moreover, for any point $y \in H_k$, we have 
-            $$|y - a_{n_k}| = \sqrt{(y_x - x_{n_k})^2 + (y_\xi - \xi_{n -k})^2} < \sqrt{\frac{\delta^2}{4} + \frac{\delta^2}{4}} = \frac{\delta}{2} < \delta,$$
-            which has $|V_\varphi f(y)| > \frac{\epsilon}{2} \rightarrow |V_\varphi f(y)|^2 > \frac{\epsilon^2}{4}$ by our earlier work. Naturally then, we get a lower bound by montonicity such that 
-            $$\int_{H_k} |V_\varphi(f)|^2 > \frac{\epsilon^2}{4}\delta^2.$$
-            Recall then what our prescriptions on $a_{n_k}$ were. In particular, we note the $H_k$ are pairwise disjoint by construction, as we have that the $a_{n_k}$ are at least $2\delta$ apart by selection. \\ \\
-            Moreover, we took the distance between each $a_{n_k}$ and $K_N$ greater than $2\delta$, which shows that each is disjoint with $K_N$, as so all are neatly contained in $\mathbb{R}^2 \setminus K_N$. \\ \\
-            Using our previous work then, we get
-            \begin{align*}
-                \epsilon > \int_{\mathbb{R}^2} |V_\varphi(f)|^2 - \int_{K_N} |V_\varphi(f)|^2 \\
-                =  \int_{\mathbb{R}^2 \setminus K_N} |V_\varphi(f)|^2 \\
-                \geq \int_{\cup_{k = 1}^\infty H_k} |V_\varphi(f)|^2 && \text{(Monotonicity)} \\
-                = \sum_{k = 1}^\infty \int_{H_k} |V_\varphi(f)|^2 && \text{(Disjointness)} \\
-                \geq \sum_{k = 1}^\infty \frac{\epsilon^2}{4}\delta^2 \\
-                = \infty,
-            \end{align*}
-            which is a contradiction.
         \end{proof}
     \end{enumerate}
 \end{ex}
