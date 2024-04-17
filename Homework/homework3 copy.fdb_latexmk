@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1713298499 "/Users/davidohcutler/Desktop/Functional Analysis/Homework/homework3 copy.tex" "homework3 copy.pdf" "homework3 copy" 1713298499 0
-  "/Users/davidohcutler/Desktop/Functional Analysis/Homework/homework3 copy.tex" 1713298499 30932 29d8abd5108ad36a9d32b071a6cbac95 ""
+["pdflatex"] 1713318412 "/Users/davidohcutler/Desktop/Functional Analysis/Homework/homework3 copy.tex" "homework3 copy.pdf" "homework3 copy" 1713318412 0
+  "/Users/davidohcutler/Desktop/Functional Analysis/Homework/homework3 copy.tex" 1713318411 32662 ab95542afa12ec23dd59040b8393849f ""
   "/Users/davidohcutler/Library/texlive/2023/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1708125082 8424 8e5ad3e2c19c1c05e74b7a57a8409e37 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -65,8 +65,8 @@
   "/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1707934094 4623355 b8cad38412faebe1ce5b780a45db67bd ""
   "/usr/local/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1707934086 7883458 c72b9bc8d927ffce4f1ad0ac92bf3b3e ""
   "/usr/local/texlive/2023/texmf.cnf" 1678822455 577 1b2b1af17af2508fb20dd85783af4050 ""
-  "homework3 copy.aux" 1713298499 33 e6d77a6cc1977d88a849501f83258f9d "pdflatex"
-  "homework3 copy.tex" 1713298499 30932 29d8abd5108ad36a9d32b071a6cbac95 ""
+  "homework3 copy.aux" 1713318412 33 caafbda2f246531a72f60df9bc4c0d5b "pdflatex"
+  "homework3 copy.tex" 1713318411 32662 ab95542afa12ec23dd59040b8393849f ""
   (generated)
   "homework3 copy.aux"
   "homework3 copy.log"

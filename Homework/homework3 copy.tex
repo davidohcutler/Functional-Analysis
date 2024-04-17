@@ -31,7 +31,7 @@
 \newenvironment{example}[1][Example]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
 \begin{document}
-\noindent David Owen Horace Cutler \hfill {\Large Math 237: Homework 2} \hfill \today
+\noindent David Owen Horace Cutler \hfill {\Large Math 237: Homework 3} \hfill \today
 
 \begin{ex}{1}
     Show that the only function $f \in L^1(\mathbb{R})$ such that $f = f * f$ is $f = 0$ a.e. 
@@ -43,26 +43,26 @@
         so we consequently have 
         $$\hat{f}(\xi) = 0 \text{ or } 1, \quad \forall \xi \in \mathbb{R}.$$
         Recall then that $\hat{f}$ is continuous on $\mathbb{R}$; it trivially follows that it thus must be either identically 0 or identically 1, as we would otherwise contradict the intermediate value theorem. \\ \\
-        However, the Riemann-Lebesgue Lemma guarentees that $|\hat{f}|$ should decay to $0$ as $|x| \rightarrow \infty$; so the only possibility is that $\hat{f}$ is constantly 0. \\ \\
+        However, the Riemann-Lebesgue lemma guarentees that $|\hat{f}|$ should decay to $0$ as $|x| \rightarrow \infty$; so the only possibility is that $\hat{f}$ is constantly 0. \\ \\
         Note then clearly $\hat{0} = 0$; by the uniqueness of Fourier transforms then, as we thus have $\hat{f} = \hat{0}$, it must be then that $f = 0 \text{ a.e.}$, as desired
     \end{proof}
 \end{ex}
 
 \begin{ex}{6}
-    Suppose $f \in \text{AC}(\mathbb{T})$, i.e., $f$ is $1$-periodic and absolutely continuous on $[0,1]$.
+    Suppose $f \in AC(\mathbb{T})$, i.e., $f$ is $1$-periodic and absolutely continuous on $[0,1]$.
     \begin{enumerate}[label=6.\arabic*]
         \item Prove that $\hat{f'}(n) = 2\pi in\hat{f}(n)$ for $n \in \mathbb{Z}$ and conclude $\underset{|n| \rightarrow \infty}{\lim} n\hat{f}(n) = 0$.
         \begin{proof}
-            By assumption $f \in AC(\mathbb{T})$. We know of course that $e^{2\pi in\xi}$ is furthermore absolutely continuous are we observe it is continuously differentiable. \\ \\
+            By assumption $f \in AC(\mathbb{T})$. We know of course that $e^{2\pi in\xi}$ is furthermore absolutely continuous as we observe it is continuously differentiable. \\ \\
             Thus, we can apply integration by parts, which gets us the following (note $\frac{d}{d\xi} e^{-2\pi in\xi} = -2\pi ine^{-2\pi in\xi}$):
             \begin{align*}
                 \hat{f'}(n) = \int_0^1 f'(\xi) e^{-2\pi i n\xi} d\xi \\
-                = e^{-2\pi in\xi}f(1) - f(0) - \int_0^1 -2\pi in f(\xi)e^{-2\pi in \xi} d\xi \\
-                = e^{-2\pi in\xi}f(1) - f(0) + 2\pi i n \hat{f}(n)
+                = e^{-2\pi in}f(1) - f(0) - \int_0^1 -2\pi in f(\xi)e^{-2\pi in \xi} d\xi \\
+                = e^{-2\pi in}f(1) - f(0) + 2\pi i n \hat{f}(n)
             \end{align*}
-            We note then that for any value of $n \in \mathbb{Z}$, we have $e^{-2\pi in\xi} = 1$. Moreover, as $f$ is $1$-periodic, we have $f(0) = f(1)$. Thus we can further reduce 
+            We note then that for any value of $n \in \mathbb{Z}$, we have $e^{-2\pi in} = 1$. Moreover, as $f$ is $1$-periodic, we have $f(0) = f(1)$. Thus we can further reduce 
             \begin{align*}
-                e^{-2\pi in\xi}f(1) - f(0) + 2\pi i n \hat{f}(n) \\
+                e^{-2\pi in}f(1) - f(0) + 2\pi i n \hat{f}(n) \\
                 = 2\pi in\hat{f}(n),
             \end{align*}
             as desired. Recall the by the Riemann-Lebesgue Lemma we know 
@@ -73,6 +73,21 @@
         \end{proof}
         \item Show that if $\int_0^1 f(x) dx = 0$, then 
         $$\int_0^1 |f(x)|^2 dx \leq \frac{1}{4\pi^2} \int_0^1 |f'(x)|^2 dx$$
+        \begin{proof}
+            By Heil Problem 9.3.24, we have that the Plancherel equality holds for $L^1(\mathbb{T})$, that is for $f' \in L^1(\mathbb{T})$ (recall the derivative of a 1-periodic function is 1-periodic) we have 
+            $$\sum_{n \in \mathbb{Z}} |\hat{f'}(n)|^2 = ||f'||_2^2 = \int_0^1 |f'(x)|^2 dx.$$
+            By 6.1 then, we know $\hat{f'}(n) = 2\pi in\hat{f}(n)$ for each $n \in \mathbb{Z}$. Plugging in then, we get 
+            $$\sum_{n \in \mathbb{Z}} |\hat{f'}(n)|^2 = \sum_{n \in \mathbb{Z}} |2\pi in\hat{f}(n)|^2 = 4\pi^2 \sum_{n \in \mathbb{Z}} n^2|\hat{f}(n)|^2.$$
+            As we assumed $\int_0^1 f(x) dx = 0$ then, it must be $\hat{f}(0) = 0$ as we have 
+            $$\hat{f}(0) = \int_0^1 f(x)e^{-2\pi i(0)x} = \int_0^1 f(x) dx = 0.$$
+            Thus we can conclude that $|\hat{f}(n) | \leq |n\hat{f}(n)|$, as this verifies this holds for $n = 0$, where it automatically true for $n \neq 0$. Thus 
+            $$4\pi^2 \sum_{n \in \mathbb{Z}} |\hat{f}(n)|^2 \leq 4\pi^2 \sum_{n \in \mathbb{Z}} n^2|\hat{f}(n)|^2.$$
+            But of course $f \in L^1(\mathbb{T})$, so applying Plancherel's equality again has 
+            $$4\pi^2 \sum_{n \in \mathbb{Z}} |\hat{f}(n)|^2 = 4\pi^2 \int_0^1 |f(x)|^2 dx.$$
+            Dividing by $4\pi^2$ and putting things together we get
+            $$\int_0^1 |f(x)|^2 dx = \sum_{n \in \mathbb{Z}} |\hat{f}(n)|^2 \leq \sum_{n \in \mathbb{Z}} n^2|\hat{f}(n)|^2 = \frac{1}{4\pi^4} \sum_{n \in \mathbb{Z}} |\hat{f'}(n)|^2 = \frac{1}{4\pi^2} \int_0^1 |f'(x)|^2 dx,$$
+            as desired.
+        \end{proof}
     \end{enumerate}
 \end{ex}
 
@@ -84,7 +99,7 @@
         \begin{align*}
             \langle T_ng, T_mg \rangle \\
             = \int_{-\infty}^\infty T_ng(x)\overline{T_mg(x)}dx \\
-            = \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi && \text{(Parseval's theorem)}
+            = \int_{-\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi && \text{(Plancherel's theorem)}
         \end{align*}
         We would like to say now that $(T_mg)\hat{\;}(\xi) = e^{-2\pi i m \xi}\hat{g}(\xi)$ for a.e. $\xi$, i.e. we have the translation identity for $L^2(\mathbb{R})$ functions. 
         \\ \\ For this, define $g_R = \mathbbm{1}_{[-R, R]}g$. Then clearly each $g_R$ is in $L^2(\mathbb{R})$, as as we have $L^2 \subseteq L^1$ on bounded domains we have $g_R \in L^1(\mathbb{R})$, i.e. the Fourier transform is defined. \\ \\
@@ -92,10 +107,10 @@
         \begin{align*}
             (T_m g_R)\hat{\;}(\xi) \\
             = \int_{-\infty}^\infty T_mg_R(x)e^{-2\pi i \xi x}dx \\ 
-            = \int_{-\infty}^\infty g(x- m)e^{-2\pi i \xi x}dx \\ 
-            = \int_{-\infty}^\infty g(u)e^{-2\pi i \xi (u + m)}dx && (u-\text{substitution}) \\
-            = \int_{-\infty}^\infty \Big ( g_R(u)e^{-2\pi i \xi u} \Big)e^{-2\pi i \xi m} \\
-            = e^{-2\pi i \xi m} \int_{-\infty}^\infty g_R(u)e^{-2\pi i \xi u} \\ 
+            = \int_{-\infty}^\infty g_R(x- m)e^{-2\pi i \xi x}dx \\ 
+            = \int_{-\infty}^\infty g_R(u)e^{-2\pi i \xi (u + m)}du && (u-\text{substitution}) \\
+            = \int_{-\infty}^\infty \Big ( g_R(u)e^{-2\pi i \xi u} \Big)e^{-2\pi i \xi m} du \\
+            = e^{-2\pi i \xi m} \int_{-\infty}^\infty g_R(u)e^{-2\pi i \xi u} du \\ 
             = e^{-2\pi i \xi m} \hat{g_R}(\xi),
         \end{align*}
         moreover, note we have $g_R \xrightarrow{L^2} g$. Thus, by definition, for $g \in L^2(\mathbb{R})$ it is precisely $\hat{g} = \underset{R \rightarrow \infty}{\lim} \hat{g_R}$. Thus we get 
@@ -108,9 +123,9 @@
             = e^{-2\pi i m\xi} \underset{R \rightarrow \infty}{\lim} \hat{g_R} \\
             = e^{-2\pi i m\xi}\hat{g},
         \end{align*}
-        where this equality is in the $L^2$ sense, i.e. precisely that $(T_mg)\hat{\;}(\xi) = e^{-2\pi i m \xi}\hat{g}(\xi)$ for a.e. $\xi$. Thus we can continue our derivation:
+        where this equality is in the $L^2$ sense, i.e. precisely that $(T_mg)\hat{\;}(\xi) = e^{-2\pi i m \xi}\hat{g}(\xi)$ for a.e. $\xi$. Thus we can continue our derivation (note we assume some basic facts, i.e. finiteness of this integral as the inner product is finite):
         \begin{align*}
-            \int_{\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi \\
+            \int_{-\infty}^\infty (T_ng)\hat{\;}(\xi)\overline{(T_mg)\hat{\;}(\xi)} d\xi \\
             = \int_{-\infty}^\infty e^{-2\pi in\xi}\hat{g}(\xi)\overline{e^{-2\pi im\xi}\hat{g}(\xi)} d\xi && \text{(Identity for transform of translation)} \\
             = \int_{-\infty}^\infty e^{-2\pi in\xi}\overline{e^{-2\pi im\xi}}\hat{g}(\xi)\overline{\hat{g}(\xi)} d\xi && \text{(Modulus is multiplicative)} \\
             = \int_{-\infty}^\infty e^{-2\pi i(n - m)\xi}|\hat{g}(\xi)|^2 d\xi && (z\overline{z} = |z|^2, \overline{e^{-2\pi im\xi}} = e^{2\pi im\xi}) \\
@@ -121,7 +136,7 @@
         In particular, refer temporarily to $f_{n,m}$ as the integrand. Then we have the following, as our exponenial always falls on the unit circle in the complex plane:
         $$\int_0^1 \sum_{k \in \mathbb{Z}} |f_{n,m}| = \int_0^1 \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 = \int_{k}^{k + 1} \sum_{k \in \mathbb{Z}} |\hat{g}(\xi)|^2,$$
         where monotone convergence, given the non-negativity of each $|\hat{g}(\xi)|^2$, has 
-        $$\int_{k}^{k + 1}\sum_{k \in \mathbb{Z}} |\hat{g}(\xi)|^2 = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} |\hat{g}(\xi)|^2 = \int_{\infty}^\infty |\hat{g}(\xi)|^2 < \infty,$$
+        $$\int_{k}^{k + 1}\sum_{k \in \mathbb{Z}} |\hat{g}(\xi)|^2 = \sum_{k \in \mathbb{Z}} \int_{k}^{k + 1} |\hat{g}(\xi)|^2 = \int_{-\infty}^\infty |\hat{g}(\xi)|^2 < \infty,$$
         where the finiteness of the last term follows as $g \in L^2(\mathbb{R}) \rightarrow \hat{g} \in L^2(\mathbb{R})$. \\ \\
         Thus $\int_0^1 \sum_{k \in \mathbb{Z}} |f_{n,m}|$ is finite; by Tonelli's theorem then, again with respect to the counting and Lebesgue measures, $\sum_{k \in \mathbb{Z}} \int_0^1 |f_{n,m}|$ is as well. Thus the hypotheses for Fubini's theorem are fulfilled, and we interchange the sum. We continue then:
         \begin{align*}
@@ -130,7 +145,7 @@
             = \int_0^1 \sum_{k \in \mathbb{Z}} e^{-2\pi i(n - m)\xi}|\hat{g}(\xi + k)|^2 d\xi \\
             = \int_0^1 \Big ( \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \Big)e^{-2\pi i(n - m)\xi} d\xi
         \end{align*}
-        Define $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$. Note then our earlier work done to show we can apply Fubini's theorem has $H \in L^1(\mathbb{R})$. \\ \\
+        Define $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$. Note then our earlier work done to show we can apply Fubini's theorem has $H \in L^1[0,1]$. \\ \\
         We also observe the $1$-periodicity of $\sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2$, which is obvious as $k$ varies over all $\mathbb{Z}$. \\ \\
         Thus $H(\xi) = \sum_{k \in \mathbb{Z}} |\hat{g}(\xi + k)|^2 \in L^1(\mathbb{T})$; so its Fourier transform is defined. We can continue then:
         \begin{align*}
@@ -165,7 +180,7 @@
             h_{j,k}(x) = 2^{\frac{j}{2}}h(2^jx - k)
         \end{cases}
     \end{equation*}
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=14.\arabic*]
         \item Prove that $\{h_{j,k}\}_{j, k \in \mathbb{Z}}$ is an orthonormal sequence in $L^2(\mathbb{R})$.
         \begin{proof}
             Let $j, k, j', k' \in \mathbb{Z}$ and consider $h_{jk}$ and $h_{j'k'}$. By the definition of $h_{jk}$, we can write 
@@ -194,7 +209,7 @@
                 (\mathbbm{1}_{I_{j + 1, 2k}} - \mathbbm{1}_{I_{j + 1, 2k + 1}})(\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}) \\ = \mathbbm{1}_{I_{j + 1, 2k}}\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j + 1, 2k}}\mathbbm{1}_{I_{j' + 1, 2k' + 1}} - \mathbbm{1}_{I_{j + 1, 2k + 1}}\mathbbm{1}_{I_{j' + 1, 2k'}} + \mathbbm{1}_{I_{j + 1, 2k + 1}}\mathbbm{1}_{I_{j' + 1, 2k' + 1}}
             \end{align*}
             Say then first that $k = k'$ and $j = j'$. Then this reduces to 
-            $$\mathbbm{1}_{I_{j + 1, 2k}} + \mathbbm{1}_{I_{j' + 1, 2k + 1}}$$
+            $$\mathbbm{1}_{I_{j + 1, 2k}} + \mathbbm{1}_{I_{j + 1, 2k + 1}}$$
             as the two middle terms vanish as we have that $I_{n,k}$ and $I_{n,k + 1}$ are disjoint for any particular $n \in \mathbb{Z}$ by definition. Additionally, the square of an indicator function is itself. \\ \\  
             Integrating (adding back in the power of 2, note here $2^\frac{j}{2}2^\frac{j'}{2} = 2^\frac{j}{2}2^\frac{j}{2} = 2^j$), we note
             $$2^j\int_{-\infty}^\infty \mathbbm{1}_{I_{j + 1, 2k}} + \mathbbm{1}_{I_{j + 1, 2k + 1}} = 2^j(2^{-j - 1} + 2^{-j - 1}) = 1;$$
@@ -203,7 +218,7 @@
             $$- \mathbbm{1}_{I_{j + 1, 2k}}\mathbbm{1}_{I_{j + 1, 2k' + 1}} - \mathbbm{1}_{I_{j + 1, 2k + 1}}\mathbbm{1}_{I_{j + 1, 2k'}},$$
             still under the assumption $j = j'$. \\ \\ We note then each product vanishes as long as we don't have $2k = 2k' + 1$ or $2k' = 2k + 1$ (as then the intervals are disjoint in the products), but this is automatically true as we have no integer that is even \textit{and} odd. \\ \\ 
             Thus this the integral evaluates to $0$ in this case. \\ \\
-            Say then $j \neq j'$. We assume without loss of generality that $j < j'$, i.e. $j + 1 < j' + 1$ such that $2^{-j - 1} > 2^{- j' - 1}$. This assumption allows us to "nest" dyadic intervals, i.e. it guarentees the existence of some $I_{j + 1,n}$ in which $I_{j' +1, 2k'}$ and $I_{j' + 1, 2k' + 1}$ are properly contained. \\ \\This fact is obvious if we constructing dyadic intervals iteratively for each value $j \in \mathbb{Z}$. If one wishes for explicit proof, we just note that we have by definition
+            Say then $j \neq j'$. We assume without loss of generality that $j < j'$, i.e. $j + 1 < j' + 1$ such that $2^{-j - 1} > 2^{- j' - 1}$. This assumption allows us to ``nest" dyadic intervals, i.e. it guarentees the existence of some $I_{j + 1,n}$ in which $I_{j' +1, 2k'}$ and $I_{j' + 1, 2k' + 1}$ are properly contained. \\ \\This fact is obvious if we construct dyadic intervals iteratively for each value $j \in \mathbb{Z}$. If one wishes for explicit proof, we just note that we have by definition
             $$I_{j' + 1, 2k'} \cup I_{j' + 1, 2k' + 1} = I_{j', k'};$$
             this of course is true precisely because the following are equivalent:
             \begin{align*}
@@ -225,7 +240,7 @@
             Notice then that we can recast the integrand (sans the power of 2) as 
             $$\mathbbm{1}_{I_{j + 1, 2k}} (\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}) + \mathbbm{1}_{I_{j + 1, 2k + 1}}(\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}).$$
             Our previous reasoning regarding the containment of intervals thus has that at least one of these terms vanishes (again, as containment in $I_{j + 1, 2k}$ or $I_{j + 1, 2k + 1}$ is mutually exclusive). \\ \\
-            If both vanish, we are done. If one does not vanish then, our reasoning has that it must be (i.e. if the first term is the sole survivor) that 
+            If both vanish, we are done. If one does not vanish then, our reasoning has that it must be (for example if the first term is the sole survivor) that 
             $$I_{j' + 1, 2k'}, I_{j' + 1, 2k' + 1} \subseteq I_{j + 1, 2k}.$$
             Then, inspecting the integral, we get 
             $$\int_{-\infty}^\infty \mathbbm{1}_{I_{j + 1, 2k}} (\mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}}) = \int_{-\infty}^\infty \mathbbm{1}_{I_{j' + 1, 2k'}} - \mathbbm{1}_{I_{j' + 1, 2k' + 1}};$$
@@ -275,7 +290,7 @@
                 = \int_{-\infty}^\infty 2^{\frac{J}{2}}\mathbbm{1}_{I_{J,k}} \Big (2^{\frac{j}{2}}(\mathbbm{1}_{I_{j + 1, 2k'}} + \mathbbm{1}_{I_{j + 1, 2k' + 1}}) \Big) \\
                 = 2^\frac{J + j}{2} \int_{-\infty}^\infty \mathbbm{1}_{I_{J, k}}\mathbbm{1}_{I_{j + 1, 2k'}} - \mathbbm{1}_{I_{J,k}}\mathbbm{1}_{I_{j + 1, 2k' + 1}}
             \end{align*}
-            Recall then the argumet we presented in part (a), i.e. that dyadic intervals nest. \\ \\
+            Recall then the argumet we presented in 14.1, i.e. that dyadic intervals nest. \\ \\
             In particular, as $j + 1 > J$, it is either that we have both $I_{j + 1, 2k'}$ and $I_{j + 1, 2k' + 1}$ properly contained in $I_{J,k}$, or neither is. \\ \\
             In the latter case, both products vanish, so the integral evaluates to 0 as desired. \\ \\
             In the former case, we have proper containment, so the first term is $1$ on $I_{j + 1, 2k'}$, and the the second is $-1$ on $I_{j + 1, 2k' + 1}$. Then as both these intervals are the same length (and disjoint), we have that the integral evaluates to $1 - 1 = 0$. \\ \\
@@ -317,12 +332,12 @@
             $$f(c) = 2^J \int_{I_{J, k}} f = g_r(x).$$
             It follows
             $$|f(x) - g_r(x)| \leq |f(x) - f(c)| + |f(c) - g_r(x)| < \epsilon$$
-            as $|x - d| < \delta$, given we took $I_{j,k}$ smaller than $\delta$. \\ \\
+            as $|x - c| < \delta$, given we took $|I_{j,k}|$ smaller than $\delta$. \\ \\
             As our choice of $x$ was arbitrary then, we get 
             $$||f - g_r||_\infty < \epsilon,$$
             i.e. we have $g_r$ converges to $f$ uniformly as $r \rightarrow \infty$. Thus $g_r$ also converges to $f$ in the $L^2$ norm, given $[0,1]$ is finite measure. \\ \\
             So we have that we can approximate $f$ with these sort of step functions. \\ \\As we can approximate any $L^2[0,1]$ function with a continuous function then, the triangle inequality has that we can approximate $L^2[0,1]$ functions with these step functions. \\ \\
-            As each $g_r$ is just a sum of scaled $h_{j,k}$s and $p_{J,k}$s in $\{p_{J,k} : 0 \leq k \leq 2^J - 1\} \cup \{h_{j, k} : j \geq J \text{ and } 0 \leq k \leq 2^j - 1\}$ then, this demonstrates this collection is an orthonormal basis. \\ \\
+            As each $g_j$ is just a sum of scaled $h_{j,k}$s and $p_{J,k}$s in $\{p_{J,k} : 0 \leq k \leq 2^J - 1\} \cup \{h_{j, k} : j \geq J \text{ and } 0 \leq k \leq 2^j - 1\}$ then, this demonstrates this collection is an orthonormal basis (with the orthnormal part coming from earlier). \\ \\
             Recall then we assumed the our spaces were real-valued; note for this sake the complex case follows by splitting the complex-valued function into its real and complex parts.
         \end{proof}
     \end{enumerate}
